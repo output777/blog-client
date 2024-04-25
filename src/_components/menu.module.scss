@@ -1,0 +1,114 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  height: 4rem;
+  background: #fff;
+}
+
+.logo {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+
+  span {
+    color: #0a2855;
+  }
+}
+
+.logo:hover {
+  transform: scale(1.2);
+}
+
+.menuContainer {
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.icon:hover {
+  transform: scale(1.2);
+}
+
+.descBox {
+  width: 100dvw;
+  height: 300px;
+  background: #0a2855;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  position: relative;
+}
+
+.descBox div {
+  display: block;
+  text-align: start;
+  font-size: 2.2rem;
+}
+
+.descTextBox {
+  width: 80%;
+}
+
+.descTextBox span {
+  display: block;
+  padding: 1rem 0;
+}
+
+.techBox {
+  padding: 0 3rem;
+  background: #fff;
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  border-top-left-radius: 20px;
+  bottom: -60px;
+  right: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.aboutBox {
+  position: absolute;
+  bottom: 100px;
+}

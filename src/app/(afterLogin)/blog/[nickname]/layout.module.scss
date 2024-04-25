@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: ghostwhite;
+  overflow: auto;
+}
+
+.blogInfoBox {
+  margin-top: 60px;
+  height: 200px;
+  background: #fff;
+}
+
+.subContainer {
+  display: flex;
+  min-height: 500px;
+  position: sticky;
+  top: 60px;
+  flex: 1;
+}
+
+.categoriesContainer {
+  width: 250px;
+  padding-top: 2rem;
+  // position: sticky;
+  // top: 60px;
+}
+
+.childrenContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2rem;
+  // overflow: auto;
+  // min-height: 500px;
+}

@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  width: 100dvw;
+  height: 100%;
+  background: #fff;
+  border-radius: 1rem;
+
+  h3 {
+    font-size: 1.3rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    color: #0a2855;
+    padding-bottom: 1rem;
+    display: inline-block;
+    padding: 1rem 2rem 1rem 0;
+  }
+
+  h6 {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    color: #0a2855;
+  }
+}
+
+.careerText {
+  color: #000;
+  padding-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.careerContainer {
+  display: flex;
+  gap: 5rem;
+}
+
+.careerBox {
+  width: 25rem;
+  height: 17rem;
+  border-radius: 0.5rem;
+  border: 1px solid none;
+  background-color: #fff;
+  position: relative;
+  box-sizing: border-box;
+  padding: 2rem 1.5rem;
+  transition: 0.2s;
+
+  span {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+.careerBox:hover {
+  transform: scale(1.1);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.shadow {
+  box-shadow: 0px 7px 10px -4px rgba(#0a2855, 0.67);
+  -webkit-box-shadow: 0px 7px 10px -4px rgba(#0a2855, 0.67);
+  -moz-box-shadow: 0px 7px 10px -4px rgba(#0a2855, 0.67);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style-type: decimal;
+  padding: 0.75rem 1.25rem;
+}

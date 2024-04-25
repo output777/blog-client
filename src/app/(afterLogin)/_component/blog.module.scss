@@ -1,0 +1,61 @@
+.container {
+  background: #0a2855;
+  position: relative;
+  height: 200px;
+}
+
+.blogBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 3rem;
+}
+
+.title {
+  font-size: 2rem;
+  max-width: 400px;
+  color: #fff;
+}
+
+.description {
+  font-size: 1.3rem;
+  max-width: 300px;
+  color: #fff;
+}
+
+.titleInput {
+  border: 1px solid #ffffff;
+  padding: 1rem;
+  outline: none;
+  border-radius: 10px;
+  width: 400px;
+  font-size: 1.5rem;
+  resize: none;
+}
+
+.descriptionInput {
+  border: 1px solid #0a2855;
+  padding: 1rem;
+  outline: none;
+  border-radius: 10px;
+  width: 400px;
+  font-size: 1.3rem;
+  resize: none;
+}
+
+.btnBox {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  display: flex;
+  gap: 0.5rem;
+  color: #fff;
+}
+
+.btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #fff;
+}

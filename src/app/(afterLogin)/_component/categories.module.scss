@@ -1,0 +1,105 @@
+.categoriesContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.categoriesBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.writeBtn {
+  display: flex;
+  gap: 0.5rem;
+  background: #0a2855;
+  color: #fff;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+}
+
+.editButton {
+  display: flex;
+  gap: 0.5rem;
+  color: #0a2855;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.editButtonBox {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  color: #0a2855;
+  font-weight: bold;
+}
+
+.addEditBox {
+  display: flex;
+}
+
+.editInputBox {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  height: 40px;
+}
+
+.editInput {
+  border: 1px solid #0a2855;
+  outline: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 0 1rem;
+  width: 150px;
+}
+
+.editInputBox button {
+  background: #0a2855;
+  color: #fff;
+  padding: 0 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.addEditInputBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+
+.addEditInput {
+  border: 1px solid #0a2855;
+  outline: none;
+  border-radius: 5px;
+  padding: 0 1rem;
+  width: 200px;
+  height: 40px;
+}
+
+.addEditBtns {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  color: #0a2855;
+  font-weight: bold;
+}
+
+.addEditBtn {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 2rem;
+  color: #0a2855;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
