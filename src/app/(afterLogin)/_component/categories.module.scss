@@ -82,6 +82,7 @@
   padding: 0 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  width: 60px;
 }
 
 .addEditInputBox {
@@ -103,6 +104,7 @@
 
 .addEditBtns {
   display: flex;
+  justify-content: center;
   gap: 1rem;
   padding: 0.5rem 1rem;
   color: #0a2855;

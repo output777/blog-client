@@ -110,7 +110,7 @@ export default function PostsInfiniteScroll() {
     <div className={styles.container}>
       {data.pages?.map((page: any) => {
         console.log('page!!!', page);
-        return page.items.map((item: any) => {
+        return page?.items.map((item: any) => {
           console.log('item!!!', item);
           return (
             <div className={styles.infinitePostContainer} key={item.post_id}>
