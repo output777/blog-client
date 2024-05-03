@@ -1,15 +1,13 @@
 import React from 'react';
 import styles from './beforeMenu.module.scss';
 import Link from 'next/link';
-import TechStack from './TechStack';
-import AboutMe from './AboutMe';
 
 export default function BeforeMenu() {
   return (
     <>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <Link href="/">
+          <Link href="/" scroll={true}>
             <span>Hi</span>Blog
           </Link>
         </div>
@@ -27,17 +25,6 @@ export default function BeforeMenu() {
             </div>
           </nav>
         </div>
-      </div>
-      <div className={styles.descBox}>
-        <div className={styles.descTextBox}>
-          블로그를 만들고 <span>공유하고 연결하세요!</span>
-        </div>
-        <div className={styles.techBox}>
-          <TechStack />
-        </div>
-      </div>
-      <div className={styles.aboutBox}>
-        <AboutMe />
       </div>
     </>
   );

@@ -4,12 +4,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.4);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: hidden;
 }
 
 .modal {
@@ -18,7 +19,8 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: 500px;
   background-color: #fff;
   border-radius: 10px;
@@ -29,6 +31,7 @@
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+  width: 80%;
 }
 
 .closeButton {
@@ -65,7 +68,7 @@
   background-color: #fff;
   border: 1px solid #cbd5ff;
   border-radius: 0.5rem;
-  width: 24rem;
+  width: 100%;
   outline: none;
 }
 
@@ -81,6 +84,21 @@
   background-color: #0a2855;
   border: 1px solid #cbd5ff;
   border-radius: 0.5rem;
-  width: 24rem;
+  width: 100%;
   color: #fff;
+}
+
+@media (max-width: 600px) {
+  .modal {
+    max-width: 360px;
+  }
+
+  .form {
+    padding: 10px;
+  }
+
+  .closeButton {
+    width: 24px;
+    height: 24px;
+  }
 }

@@ -1,24 +1,33 @@
 .categoriesContainer {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  align-items: center;
   padding: 1rem;
   gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .categoriesBox {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .writeBtn {
   display: flex;
-  gap: 0.5rem;
   background: #0a2855;
   color: #fff;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+}
+
+.all {
+  display: flex;
   width: 100%;
   padding: 0.5rem 1rem;
   justify-content: center;
@@ -31,6 +40,8 @@
   border-radius: 15px;
   font-weight: bold;
   font-size: 1.1rem;
+  justify-content: center;
+  width: 100%;
 }
 
 .editButtonBox {
@@ -39,17 +50,21 @@
   padding: 0.5rem 1rem;
   color: #0a2855;
   font-weight: bold;
+  justify-content: center;
+  width: 100%;
 }
 
 .addEditBox {
   display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .editInputBox {
   display: flex;
   justify-content: center;
-  width: 200px;
   height: 40px;
+  width: 100%;
 }
 
 .editInput {
@@ -58,7 +73,7 @@
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 0 1rem;
-  width: 150px;
+  width: 100%;
 }
 
 .editInputBox button {
@@ -74,7 +89,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 200px;
+  width: 100%;
 }
 
 .addEditInput {
@@ -82,7 +97,7 @@
   outline: none;
   border-radius: 5px;
   padding: 0 1rem;
-  width: 200px;
+  width: 100%;
   height: 40px;
 }
 
@@ -92,14 +107,101 @@
   padding: 0.5rem 1rem;
   color: #0a2855;
   font-weight: bold;
+  width: 100%;
 }
 
 .addEditBtn {
   display: flex;
   gap: 0.5rem;
-  padding-top: 2rem;
+  margin-top: 2rem;
   color: #0a2855;
   border-radius: 15px;
   font-weight: bold;
   font-size: 1.1rem;
+}
+
+.clicked {
+  font-weight: bold;
+}
+
+.categoryIconBox {
+  display: none;
+}
+
+.mobileWriteBox {
+  display: none;
+}
+
+@media (max-width: 762px) {
+  .categoryIconBox {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    box-sizing: border-box;
+    padding: 0.5rem 0.5rem 0 0;
+  }
+
+  .categoryIconBox img {
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .categoryIconBox img:hover {
+    transform: scale(1.1);
+  }
+
+  .categoriesContainer {
+    padding: 0rem;
+    gap: 0.5rem;
+    display: none;
+    cursor: pointer;
+    transition: 0.2s;
+    flex: 1;
+    color: #0a2855;
+    background-color: #fff;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .writeBtn {
+    display: none;
+  }
+
+  .mobileWriteBox {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  .mobileWriteBtn {
+    display: flex;
+    background: #0a2855;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+
+  .categoryClose {
+    display: flex;
+    background: #0a2855;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+
+  .show {
+    display: flex;
+    align-items: end;
+  }
+
+  .none {
+    display: none;
+  }
 }

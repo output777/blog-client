@@ -1,15 +1,12 @@
-.afterMenu {
+.container {
   position: fixed;
   top: 0;
   z-index: 1;
   width: 100%;
-}
-
-.container {
   display: flex;
   justify-content: space-between;
   padding: 1rem 2rem;
-  height: 60px;
+  height: 4rem;
   background: #fff;
 }
 
@@ -19,10 +16,10 @@
   cursor: pointer;
   font-weight: 600;
   transition: 0.2s;
-  color: #000;
-  span {
-    color: #0a2855;
-  }
+}
+
+.logo span {
+  color: #0a2855;
 }
 
 .logo:hover {
@@ -49,63 +46,46 @@
   cursor: pointer;
   font-weight: bold;
   transition: 0.2s;
+}
 
-  a {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-  }
+.icon a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .icon:hover {
   transform: scale(1.2);
 }
 
-.descBox {
-  width: 100dvw;
-  height: 300px;
-  background: #0a2855;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #fff;
-  font-weight: bold;
-  position: relative;
-}
+@media (max-width: 600px) {
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    height: 4rem;
+    background: #fff;
+  }
 
-.descBox div {
-  display: block;
-  text-align: start;
-  font-size: 2.2rem;
-}
+  .logo {
+    font-size: 1.2rem;
+  }
 
-.descTextBox {
-  width: 80%;
-}
+  .logo:hover {
+    transform: scale(1.1);
+  }
 
-.descTextBox span {
-  display: block;
-  padding: 1rem 0;
-}
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
 
-.techBox {
-  padding: 0 3rem;
-  background: #fff;
-  position: absolute;
-  display: flex;
-  justify-content: end;
-  border-top-left-radius: 20px;
-  bottom: -60px;
-  right: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.aboutBox {
-  position: absolute;
-  bottom: 100px;
+  .icon:hover {
+    transform: scale(1.1);
+  }
 }

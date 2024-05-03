@@ -6,6 +6,8 @@ import {queryClient} from '@/app/_lib/queryClient';
 import Link from 'next/link';
 import styles from './categories.module.scss';
 import {CategoryProps, useCategoryStore} from '@/app/_store/categoryStore';
+import {useParams} from 'next/navigation';
+import Image from 'next/image';
 
 type Props = {userEmail?: string | null; nickname?: string | null};
 interface CategoryDataProps {
@@ -14,12 +16,14 @@ interface CategoryDataProps {
 }
 
 export default function Categories({userEmail, nickname}: Props) {
+  const params = useParams();
   const {categoryValue, setCategoryValue} = useCategoryStore();
   const [isEdit, setIsEdit] = useState(false);
   const [isAddEdit, setIsAddEdit] = useState(false);
   const [addCategoryValue, setAddCategoryValue] = useState('');
+  const [show, setShow] = useState(false);
 
-  const {isPending, error, data} = useQuery({
+  const {isPending, data} = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
       const response = await fetch(
@@ -49,6 +53,7 @@ export default function Categories({userEmail, nickname}: Props) {
     onSuccess: () => {
       // 변경 성공 후 특정 쿼리 무효화
       queryClient.invalidateQueries({queryKey: ['categories']});
+      queryClient.invalidateQueries({queryKey: ['posts']});
     },
   });
 
@@ -68,6 +73,7 @@ export default function Categories({userEmail, nickname}: Props) {
     onSuccess: () => {
       // 변경 성공 후 특정 쿼리 무효화
       queryClient.invalidateQueries({queryKey: ['categories']});
+      queryClient.invalidateQueries({queryKey: ['posts']});
     },
   });
 
@@ -103,7 +109,6 @@ export default function Categories({userEmail, nickname}: Props) {
   };
 
   const saveHandler = async () => {
-    console.log('categoryValue', categoryValue);
     updateMutation.mutate(categoryValue);
     setIsEdit(false);
   };
@@ -118,8 +123,13 @@ export default function Categories({userEmail, nickname}: Props) {
   };
 
   const deleteHandler = (categoryId: number) => {
-    deleteMutation.mutate(categoryId);
-    setIsEdit(false);
+    const deleteCheck = confirm(
+      '선택하신 카테고리와 연결된 모든 포스트들도 함께 삭제됩니다. 이 작업은 되돌릴 수 없습니다. 정말로 삭제하시겠습니까?'
+    );
+    if (deleteCheck) {
+      deleteMutation.mutate(categoryId);
+      setIsEdit(false);
+    }
   };
 
   const addCategoryChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -148,6 +158,16 @@ export default function Categories({userEmail, nickname}: Props) {
     setIsAddEdit(false);
   };
 
+  const handleShow = () => {
+    setShow(true);
+  };
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  console.log('show', show);
+
   useEffect(() => {
     if (!isPending) {
       const initialValues = data?.categories.map((cateory: CategoryProps) => {
@@ -167,71 +187,96 @@ export default function Categories({userEmail, nickname}: Props) {
   }
 
   return (
-    <div className={styles.categoriesContainer}>
-      <Link href={`/blog/${nickname}/write`} className={styles.writeBtn}>
-        글쓰기
-      </Link>
-      <Link href={`/blog/${nickname}`}>전체보기</Link>
-      {isEdit ? (
-        <div className={styles.categoriesBox}>
-          {categoryValue.map((category) => (
-            <div key={category.id} className={styles.editInputBox}>
-              <input
-                type="text"
-                value={category.name}
-                onChange={(e) => changeHandler(e, category.id)}
-                className={styles.editInput}
-              />
-              <button onClick={() => deleteHandler(category.id)}>삭제</button>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className={styles.categoriesBox}>
-          {data.categories.map((category: CategoryProps) => (
-            <Link
-              href={`/blog/${nickname}/category/${category.id}`}
-              key={`category-${category.id}`}
-            >
-              {category.name}
-            </Link>
-          ))}
-        </div>
-      )}
-      {isAddEdit && !isEdit ? (
-        <div className={styles.addEditInputBox}>
-          <input
-            type="text"
-            className={styles.addEditInput}
-            value={addCategoryValue}
-            onChange={addCategoryChangeHandler}
-          />
-          <div className={styles.addEditBtns}>
-            <button onClick={addCategorySaveHandler}>추가</button>
-            <button onClick={addCategoryCancelHandler}>취소</button>
+    <>
+      <div className={`${styles.categoryIconBox}  ${show ? styles.none : styles.show}`}>
+        <Image
+          src="/images/category.svg"
+          alt="category icon"
+          width={30}
+          height={30}
+          onClick={handleShow}
+        />
+      </div>
+      <div className={`${styles.categoriesContainer} ${show ? styles.show : styles.none}`}>
+        <div className={styles.mobileWriteBox}>
+          <Link href={`/blog/${nickname}/write`} className={styles.mobileWriteBtn}>
+            글쓰기
+          </Link>
+          <div className={styles.categoryClose} onClick={handleClose}>
+            닫기
           </div>
         </div>
-      ) : (
-        <div className={styles.addEditBox}>
-          <button className={styles.addEditBtn} onClick={addCategoryEditHandler}>
-            카테고리 추가
-          </button>
-        </div>
-      )}
-      {!isAddEdit && isEdit ? (
-        <div className={styles.editButtonBox}>
-          <button onClick={saveHandler}>저장</button>
-          <button onClick={cancelHandler}>취소</button>
-        </div>
-      ) : (
-        <>
-          {data.categories.length === 0 ? null : (
-            <button className={styles.editButton} onClick={editHandler}>
-              카테고리 수정
+        <Link href={`/blog/${nickname}/write`} className={styles.writeBtn}>
+          글쓰기
+        </Link>
+        <Link
+          href={`/blog/${nickname}`}
+          className={`${styles.all} ${params?.categoryid === undefined ? styles.clicked : ''}`}
+        >
+          전체보기
+        </Link>
+        {isEdit ? (
+          <div className={styles.categoriesBox}>
+            {categoryValue.map((category) => (
+              <div key={category.id} className={styles.editInputBox}>
+                <input
+                  type="text"
+                  value={category.name}
+                  onChange={(e) => changeHandler(e, category.id)}
+                  className={styles.editInput}
+                />
+                <button onClick={() => deleteHandler(category.id)}>삭제</button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.categoriesBox}>
+            {data.categories.map((category: CategoryProps) => (
+              <Link
+                href={`/blog/${nickname}/category/${category.id}`}
+                key={`category-${category.id}`}
+                className={params?.categoryid === category.id.toString() ? styles.clicked : ''}
+              >
+                {category.name}
+              </Link>
+            ))}
+          </div>
+        )}
+        {isAddEdit && !isEdit ? (
+          <div className={styles.addEditInputBox}>
+            <input
+              type="text"
+              className={styles.addEditInput}
+              value={addCategoryValue}
+              onChange={addCategoryChangeHandler}
+            />
+            <div className={styles.addEditBtns}>
+              <button onClick={addCategorySaveHandler}>추가</button>
+              <button onClick={addCategoryCancelHandler}>취소</button>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.addEditBox}>
+            <button className={styles.addEditBtn} onClick={addCategoryEditHandler}>
+              카테고리 추가
             </button>
-          )}
-        </>
-      )}
-    </div>
+          </div>
+        )}
+        {!isAddEdit && isEdit ? (
+          <div className={styles.editButtonBox}>
+            <button onClick={saveHandler}>저장</button>
+            <button onClick={cancelHandler}>취소</button>
+          </div>
+        ) : (
+          <>
+            {data.categories.length === 0 ? null : (
+              <button className={styles.editButton} onClick={editHandler}>
+                카테고리 수정
+              </button>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 }

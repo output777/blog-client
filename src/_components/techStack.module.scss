@@ -5,3 +5,33 @@
   padding: 2rem 0;
   width: 100%;
 }
+
+.imgBox {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+@media (max-width: 762px) {
+  .imgBox {
+    max-width: 35px;
+    height: 35px;
+    position: relative;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .imgBox {
+    max-width: 25px;
+    height: 25px;
+    position: relative;
+  }
+}

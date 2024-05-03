@@ -2,37 +2,55 @@
   display: flex;
   flex-direction: column;
   height: 100dvh;
-  background: ghostwhite;
+  box-sizing: border-box;
   overflow: auto;
 }
 
 .blogInfoBox {
-  margin-top: 60px;
-  height: 200px;
-  background: #fff;
+  margin-top: 4rem;
 }
 
-.subContainer {
+.mainContainer {
   display: flex;
-  min-height: 500px;
-  position: sticky;
-  top: 60px;
   flex: 1;
+  gap: 2rem;
+  padding-top: 1rem;
 }
 
 .categoriesContainer {
   width: 250px;
-  padding-top: 2rem;
-  // position: sticky;
-  // top: 60px;
 }
 
 .childrenContainer {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 2rem;
-  // overflow: auto;
-  // min-height: 500px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+@media (max-width: 762px) {
+  .blogInfoBox {
+    margin-top: 60px;
+    height: 100%;
+  }
+
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.5rem;
+  }
+
+  .categoriesContainer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .mainContainer {
+    gap: 1rem;
+  }
 }

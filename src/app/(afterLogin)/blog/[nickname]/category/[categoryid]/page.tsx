@@ -1,5 +1,8 @@
-import React from 'react';
+import {auth} from '@/auth';
+import PostsPagination from '@/_components/PostsPagination';
 
-export default function CategoryPage() {
-  return <div>CategoryPage</div>;
+export default async function CategoryPage() {
+  const session = await auth();
+
+  return <PostsPagination nickname={session?.user?.name} />;
 }

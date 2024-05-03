@@ -1,30 +1,31 @@
 'use client';
 
-import React, {ChangeEvent, useState} from 'react';
-import 'react-quill/dist/quill.snow.css';
-import styles from './page.module.scss';
+import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
+import {useBlogStore} from '@/app/_store/blogStore';
+import {useCategoryStore} from '@/app/_store/categoryStore';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import {useSession} from 'next-auth/react';
+import {useParams, useRouter} from 'next/navigation';
+import styles from './page.module.scss';
 import InputField from '@/_components/InputField';
 import Button from '@/_components/Button';
-import {useCategoryStore} from '@/app/_store/categoryStore';
-import {useBlogStore} from '@/app/_store/blogStore';
-import {useMutation} from '@tanstack/react-query';
-import {useRouter} from 'next/navigation';
+import 'react-quill/dist/quill.snow.css';
+import {PostProps} from '@/_components/PostsPagination';
+import {getPost} from '@/_components/Post';
 import Editor from '@/_components/Editor';
 
-interface PostDataProps {
+interface UpdateDataProps {
   title: string;
   categoryId: string;
   public: string;
-  image: File | null;
+  image: File | null | string;
   value: string;
-  userId?: string;
-  blogId?: string;
 }
 
-export default function WritePage() {
+export default function UpdatePage() {
   const session = useSession();
   const router = useRouter();
+  const params = useParams();
   const {blogValue} = useBlogStore();
   const {categoryValue} = useCategoryStore();
   const [value, setValue] = useState({
@@ -33,33 +34,48 @@ export default function WritePage() {
     public: 'N',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState('선택된 파일이 없습니다');
   const [editorValue, setEditorValue] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const createMutation = useMutation({
-    mutationFn: async (postData: PostDataProps) => {
+  const updateMutation = useMutation({
+    mutationFn: async (updateData: UpdateDataProps) => {
       const formData = new FormData();
 
-      formData.append('title', postData.title);
-      formData.append('categoryId', postData.categoryId);
-      formData.append('value', postData.value);
-      formData.append('userId', postData.userId as string);
-      formData.append('blogId', postData.blogId as string);
-      formData.append('is_public', postData.public);
+      formData.append('title', updateData.title);
+      formData.append('categoryId', updateData.categoryId);
+      formData.append('value', updateData.value);
+      formData.append('is_public', updateData.public);
 
-      if (postData.image) {
-        formData.append('image', postData.image);
+      if (typeof updateData.image === 'string') {
+        formData.append('existingImageUrl', updateData.image);
+      } else if (updateData.image instanceof File) {
+        formData.append('image', updateData.image);
       }
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/post`, {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/blog/post/${params?.postid}`,
+        {
+          method: 'PUT',
+          body: formData,
+        }
+      );
       return await response.json();
     },
     onSuccess: () => {
-      router.push(`/blog/${session.data?.user?.name}`);
+      router.back();
     },
   });
+
+  const {data, isLoading, isPending} = useQuery<PostProps>({
+    queryKey: ['post', params?.postid],
+    queryFn: async () => getPost(params?.postid as string),
+  });
+
+  const handleFileInputClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   const handleValue = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
     const {value} = e.target;
@@ -70,8 +86,10 @@ export default function WritePage() {
     const {files} = e.target;
     if (files && files.length > 0) {
       setImageFile(files[0]);
+      setFileName(files[0].name);
     } else {
       setImageFile(null);
+      setFileName('선택한 파일이 없습니다');
     }
   };
 
@@ -79,24 +97,42 @@ export default function WritePage() {
     setEditorValue(value);
   };
 
-  const handlePost = async () => {
-    const postData = {
+  const handleUpdate = async () => {
+    const updateData = {
       title: value.title,
       categoryId: value.categoryId,
       public: value.public,
-      image: imageFile,
+      image: imageFile || (data?.image_url as string),
       value: editorValue,
-      userId: blogValue.userId?.toString(),
-      blogId: blogValue.blogId?.toString(),
     };
-    createMutation.mutate(postData);
+    updateMutation.mutate(updateData);
   };
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setValue((prev) => ({
+        ...prev,
+        title: data.title,
+        categoryId: data.category_id.toString(),
+        public: data.is_public,
+      }));
+      setEditorValue(data.content);
+      setFileName(data.image_url);
+    }
+  }, [isLoading, data]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={styles.container}>
+      {/* <div>
+      <Button label="수정하기" className={styles.btn} onClick={handleUpdate} />
+      </div> */}
       <div className={styles.section}>
         <div className={styles.btnBox}>
-          <Button label="게시하기" className={styles.btn} onClick={handlePost} />
+          <Button label="수정하기" className={styles.btn} onClick={handleUpdate} />
         </div>
         <div className={styles.inputContainer}>
           <div className={styles.titleBox}>
@@ -127,13 +163,19 @@ export default function WritePage() {
           </div>
           <div className={styles.imageBox}>
             <label htmlFor={'image'}>대표이미지</label>
-            <InputField
-              id={'image'}
-              name={'image'}
-              type={'file'}
-              onChange={handleImageFile}
-              accept={'image/png, image/jpeg'}
-            />
+            <div>
+              <button onClick={handleFileInputClick}>파일 선택</button>
+              <input
+                type="file"
+                id={'image'}
+                name={'image'}
+                ref={fileInputRef}
+                accept={'image/png, image/jpeg'}
+                style={{display: 'none'}}
+                onChange={handleImageFile}
+              />
+              <span>{fileName}</span>
+            </div>
           </div>
           <div className={styles.radioContainer}>
             <label className={styles.radioContainerTitle}>노출</label>
@@ -164,7 +206,7 @@ export default function WritePage() {
           </div>
         </div>
         {/* <div>
-          <Button label="게시하기" className={styles.btn} onClick={handlePost} />
+          <Button label="수정하기" className={styles.btn} onClick={handleUpdate} />
         </div> */}
       </div>
       <Editor value={editorValue} onChange={handleEditorValue} />

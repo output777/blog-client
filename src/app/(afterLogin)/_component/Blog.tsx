@@ -88,14 +88,12 @@ export default function Blog({userEmail}: BlogProps) {
       {isEdit ? (
         <div className={styles.blogBox}>
           <textarea
-            // type="text"
             value={editValue.title}
             onChange={(e) => handleChange(e, 'title')}
             className={styles.titleInput}
             maxLength={20}
           />
           <textarea
-            // type="text"
             value={editValue.description}
             onChange={(e) => handleChange(e, 'description')}
             className={styles.descriptionInput}

@@ -1,0 +1,26 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  color: #cbd5ff;
+  padding: 1rem 0;
+}
+
+.button {
+  padding: 8px 16px;
+  border: 1px solid #cbd5ff;
+  background-color: white;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.active {
+  border-color: #0a2855;
+  color: #0a2855;
+  font-weight: bold;
+}
