@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ql-align-center {
+  text-align: center !important;
+}
+
+.ql-align-right {
+  text-align: right !important;
+}
+
+.ql-align-justify {
+  text-align: justify !important;
+}

@@ -4,9 +4,9 @@
   gap: 0.5rem;
   justify-content: center;
   align-items: center;
-  padding: 1.2rem;
+  padding: 1.2rem 4rem;
   width: 100dvw;
-  height: 100%;
+  flex: 1;
   background: #fff;
   border-radius: 1rem;
 
@@ -37,11 +37,13 @@
 
 .careerContainer {
   display: flex;
+  flex-wrap: wrap;
   gap: 5rem;
 }
 
 .careerBox {
-  width: 25rem;
+  flex: 1;
+  min-width: 350px;
   height: 17rem;
   border-radius: 0.5rem;
   border: 1px solid none;
@@ -49,18 +51,24 @@
   position: relative;
   box-sizing: border-box;
   padding: 2rem 1.5rem;
-  transition: 0.2s;
-
-  span {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-  }
 }
 
-.careerBox:hover {
+.linkBox {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #0a2855;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  transition: 0.2s;
+}
+
+.linkBox:hover {
   transform: scale(1.1);
 }
 
@@ -81,3 +89,38 @@
   list-style-type: decimal;
   padding: 0.75rem 1.25rem;
 }
+
+// /* Extra small devices (phones) */
+// @media (max-width: 600px) {
+//   .container {
+//     // padding: 10px;
+//   }
+// }
+
+// /* Small devices (portrait tablets and large phones) */
+// @media (min-width: 601px) and (max-width: 768px) {
+//   .container {
+//     // padding: 15px;
+//   }
+// }
+
+// /* Medium devices (landscape tablets) */
+// @media (min-width: 769px) and (max-width: 992px) {
+//   .container {
+//     // padding: 20px;
+//   }
+// }
+
+// /* Large devices (laptops/desktops) */
+// @media (min-width: 993px) and (max-width: 1200px) {
+//   .container {
+//     // padding: 25px;
+//   }
+// }
+
+// /* Extra large devices (large laptops and desktops) */
+// @media (min-width: 1201px) {
+//   .container {
+//     // padding: 30px;
+//   }
+// }

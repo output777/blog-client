@@ -1,0 +1,88 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.descBox {
+  width: 100dvw;
+  height: 300px;
+  background: #0a2855;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.descTextBox {
+  width: 80%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  font-size: 2.2rem;
+}
+
+.descTextBox span {
+  padding: 1rem 0;
+}
+
+.techBox {
+  padding: 0 3rem;
+  background: #fff;
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  border-top-left-radius: 20px;
+  bottom: -60px;
+  right: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.aboutBox {
+  flex: 1;
+  display: flex;
+}
+
+@media (max-width: 762px) {
+  .descBox {
+    margin-bottom: 50px;
+  }
+
+  .descTextBox {
+    font-size: 1.8rem;
+  }
+
+  .imgBox {
+    max-width: 35px;
+    height: 35px;
+    position: relative;
+  }
+}
+
+@media (max-width: 600px) {
+  .descTextBox {
+    font-size: 1.5rem;
+  }
+
+  .section {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .imgBox {
+    max-width: 25px;
+    height: 25px;
+    position: relative;
+  }
+}

@@ -5,37 +5,101 @@ import styles from './techStack.module.scss';
 
 export default function TechStack() {
   return (
-    <>
-      <section className={styles.section}>
-        <Image src="/images/tech-logos/html5.svg" alt="html logo" width={50} height={50} />
-        <Image src="/images/tech-logos/css3.svg" alt="css logo" width={50} height={50} />
-        <Image src="/images/tech-logos/sass.svg" alt="sass logo" width={50} height={50} />
+    <section className={styles.section}>
+      <div className={styles.imgBox}>
+        <Image
+          src="/images/tech-logos/html5.svg"
+          alt="html logo"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+          // width={50}
+          // height={50}
+        />
+      </div>
+      <div className={styles.imgBox}>
+        <Image
+          src="/images/tech-logos/css3.svg"
+          alt="css logo"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+          // width={50}
+          // height={50}
+        />
+      </div>
+      <div className={styles.imgBox}>
         <Image
           src="/images/tech-logos/javascript.svg"
           alt="javascript logo"
-          width={50}
-          height={50}
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
         />
+      </div>
+      <div className={styles.imgBox}>
         <Image
           src="/images/tech-logos/typescript.svg"
           alt="typescript logo"
-          width={50}
-          height={50}
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
         />
-        <Image src="/images/tech-logos/react.svg" alt="react logo" width={50} height={50} />
+      </div>
+      <div className={styles.imgBox}>
         <Image
-          src="/images/tech-logos/reactquery.svg"
-          alt="reactquery logo"
-          width={50}
-          height={50}
+          src="/images/tech-logos/react.svg"
+          alt="react logo"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
         />
-        <Image src="/images/tech-logos/nextdotjs.svg" alt="nextjs logo" width={50} height={50} />
-        <Image src="/images/tech-logos/nodedotjs.svg" alt="nodejs logo" width={50} height={50} />
-        <Image src="/images/tech-logos/git.svg" alt="git logo" width={50} height={50} />
-        <Image src="/images/tech-logos/github.svg" alt="github logo" width={50} height={50} />
-        <Image src="/images/tech-logos/gitlab.svg" alt="gitlab logo" width={50} height={50} />
-        <Image src="/images/tech-logos/jira.svg" alt="jira logo" width={50} height={50} />
-      </section>
-    </>
+      </div>
+      <div className={styles.imgBox}>
+        <Image
+          src="/images/tech-logos/nextdotjs.svg"
+          alt="nextjs logo"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+        />
+      </div>
+      <div className={styles.imgBox}>
+        <Image
+          src="/images/tech-logos/git.svg"
+          alt="git logo"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+        />
+      </div>
+      <div className={styles.imgBox}>
+        <Image
+          src="/images/tech-logos/github.svg"
+          alt="github logo"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+        />
+      </div>
+      <div className={styles.imgBox}>
+        <Image
+          src="/images/tech-logos/gitlab.svg"
+          alt="gitlab logo"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+        />
+      </div>
+      <div className={styles.imgBox}>
+        <Image
+          src="/images/tech-logos/jira.svg"
+          alt="jira logo"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="center"
+        />
+      </div>
+    </section>
   );
 }

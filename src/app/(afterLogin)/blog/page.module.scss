@@ -1,0 +1,264 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-height: calc(100vh - 4rem);
+  gap: 2rem;
+}
+
+.backgroundBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  background: #0a2855;
+  width: 100%;
+  height: 200px;
+  color: #fff;
+  margin-top: 4rem;
+  position: relative;
+}
+
+.searchBox {
+  position: absolute;
+  bottom: -25px;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchInput {
+  font-size: 1rem;
+  width: 40%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 1rem;
+  border-radius: 15px;
+  color: #333;
+  outline: none;
+  border: 1px solid #909eb1;
+  -webkit-box-shadow: -1px 6px 16px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: -1px 6px 16px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: -1px 6px 16px -1px rgba(0, 0, 0, 0.1);
+}
+
+.topPostContainer {
+  width: 80%;
+  height: 360px;
+  // background: #fff;
+  margin-top: 2rem;
+}
+
+.topPost {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.topPost .imageContainer {
+  width: 360px;
+  height: 360px;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.topPost .image {
+  border-radius: 12px;
+}
+
+.topPost .infoCotainer {
+  flex: 1;
+  max-width: 500px;
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.topPost .category {
+  font-size: 0.9rem;
+  color: #909eb1;
+  font-weight: bold;
+}
+
+.topPost .title {
+  font-size: 2rem;
+  color: #0a2855;
+  font-weight: bold;
+}
+
+.topPost .content {
+  font-size: 1rem;
+  flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.topPost .infoBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.topPost .info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topPost .isPublic {
+  color: #fff;
+  background: #0a2855;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+
+.infinitePostContainer {
+  width: 80%;
+  margin-top: 2rem;
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+  .backgroundBox {
+    font-size: 2rem;
+    height: 100px;
+  }
+
+  .topPostContainer {
+    width: 100%;
+    max-width: 600px;
+    height: 200px;
+  }
+
+  .topPost {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .topPost .imageContainer {
+    width: 200px;
+    height: 200px;
+  }
+
+  .topPost .infoCotainer {
+    max-width: 360px;
+    height: 200px;
+    gap: 0.9rem;
+  }
+
+  .topPost .category {
+    font-size: 0.8rem;
+  }
+
+  .topPost .title {
+    font-size: 1.2rem;
+  }
+
+  .topPost .content {
+    font-size: 0.9rem;
+  }
+
+  .topPost .info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .topPost .isPublic {
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .backgroundBox {
+    font-size: 2rem;
+    height: 100px;
+  }
+
+  .topPostContainer {
+    min-width: 360px;
+    height: 600px;
+    margin-top: 2rem;
+  }
+
+  .topPost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-sizing: border-box;
+    height: 600px;
+  }
+
+  .topPost .imageContainer {
+    width: 360px;
+    height: 360px;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .topPost .image {
+    border-radius: 12px;
+  }
+
+  .topPost .infoCotainer {
+    flex: 1;
+    max-width: 500px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .topPost .category {
+    font-size: 0.9rem;
+    color: #909eb1;
+    font-weight: bold;
+  }
+
+  .topPost .title {
+    font-size: 2rem;
+    color: #0a2855;
+    font-weight: bold;
+  }
+
+  .topPost .content {
+    font-size: 1rem;
+    flex: 1;
+  }
+
+  .topPost .infoBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+
+  .topPost .info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .topPost .isPublic {
+    color: #fff;
+    background: #0a2855;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+  }
+}

@@ -31,7 +31,13 @@
   box-sizing: border-box;
   justify-items: center;
   align-items: center;
-  background: gainsboro;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  row-gap: 4rem;
+}
+
+.postsContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .post {

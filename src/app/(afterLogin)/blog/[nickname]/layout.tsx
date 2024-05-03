@@ -15,13 +15,7 @@ export default async function layout({children}: Props) {
       <div className={styles.blogInfoBox}>
         <Blog userEmail={userEmail} />
       </div>
-      <div className={styles.subContainer}>
-        <div className={styles.categoriesContainer}>
-          <Categories userEmail={userEmail} nickname={nickname} />
-        </div>
-        <div className={styles.childrenContainer}>{children}</div>
-      </div>
-      <div className={styles.subContainer}>
+      <div className={styles.mainContainer}>
         <div className={styles.categoriesContainer}>
           <Categories userEmail={userEmail} nickname={nickname} />
         </div>
