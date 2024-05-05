@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './beforeMenu.module.scss';
+import styles from './beforeMenu.module.css';
 import Link from 'next/link';
 
 export default function BeforeMenu() {

@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import styles from './page.module.scss';
+import styles from './page.module.css';
 import InputField from '@/_components/InputField';
 import Button from '@/_components/Button';
 import {useFormState, useFormStatus} from 'react-dom';

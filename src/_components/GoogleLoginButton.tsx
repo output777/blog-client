@@ -1,7 +1,7 @@
 // 'use client';
 import React from 'react';
 import {signIn} from 'next-auth/react';
-import styles from './googleLoginButton.module.scss';
+import styles from './googleLoginButton.module.css';
 import Image from 'next/image';
 
 export default function GoogleLoginButton() {

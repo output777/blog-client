@@ -2,7 +2,7 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {useParams, useRouter} from 'next/navigation';
 import {PostProps} from './PostsPagination';
-import styles from './post.module.scss';
+import styles from './post.module.css';
 import DOMPurify from 'dompurify';
 import Link from 'next/link';
 

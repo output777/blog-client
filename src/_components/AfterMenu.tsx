@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './afterMenu.module.scss';
+import styles from './afterMenu.module.css';
 import Link from 'next/link';
 import SignoutButton from '@/app/(afterLogin)/_component/SignoutButton';
 

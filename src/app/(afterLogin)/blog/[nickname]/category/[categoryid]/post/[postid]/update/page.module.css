@@ -12,7 +12,7 @@
 
 .btnBox {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .btn {
@@ -95,11 +95,25 @@
   align-items: center;
 }
 
-.imageBox input[type='file']::-webkit-file-upload-button {
+.imageBox div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.imageBox div span {
+  word-wrap: break-word;
+}
+
+.imageBox button {
   background-color: #0a2855;
   color: #fff;
-  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .radioContainer {
@@ -123,6 +137,11 @@
 .radioBox div {
   display: flex;
   gap: 5px;
+}
+
+.editor {
+  height: 450px;
+  padding: 1rem;
 }
 
 @media (max-width: 1000px) {
@@ -151,6 +170,12 @@
 
   .imageBox {
     flex-direction: column;
+  }
+
+  .imageBox div {
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: flex-start;
   }
 
   .radioContainerTitle {
@@ -183,6 +208,11 @@
   }
 
   .categoryBox select {
+    width: 100%;
+    min-width: 340px;
+  }
+
+  .imageBox div span {
     width: 100%;
     min-width: 340px;
   }

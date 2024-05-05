@@ -1,12 +1,3 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  min-height: calc(100vh - 4rem);
-  gap: 2rem;
-}
-
 .backgroundBox {
   display: flex;
   justify-content: center;
@@ -48,7 +39,7 @@
 .topPostContainer {
   width: 80%;
   height: 360px;
-  // background: #fff;
+  /* background: #fff; */
   margin-top: 2rem;
 }
 
@@ -58,7 +49,7 @@
   gap: 3rem;
 }
 
-.topPost .imageContainer {
+.imageContainer {
   width: 360px;
   height: 360px;
   position: relative;
@@ -69,11 +60,15 @@
   border-radius: 12px;
 }
 
-.topPost .image {
+.image {
   border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
-.topPost .infoCotainer {
+.infoCotainer {
   flex: 1;
   max-width: 500px;
   height: 360px;
@@ -83,38 +78,38 @@
   box-sizing: border-box;
 }
 
-.topPost .category {
+.category {
   font-size: 0.9rem;
   color: #909eb1;
   font-weight: bold;
 }
 
-.topPost .title {
+.title {
   font-size: 2rem;
   color: #0a2855;
   font-weight: bold;
 }
 
-.topPost .content {
+.content {
   font-size: 1rem;
   flex: 1;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-.topPost .infoBox {
+.infoBox {
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
 }
 
-.topPost .info {
+.info {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.topPost .isPublic {
+.isPublic {
   color: #fff;
   background: #0a2855;
   padding: 0.5rem 1rem;
@@ -144,37 +139,37 @@
     gap: 2rem;
   }
 
-  .topPost .imageContainer {
+  .imageContainer {
     width: 200px;
     height: 200px;
   }
 
-  .topPost .infoCotainer {
+  .infoCotainer {
     max-width: 360px;
     height: 200px;
     gap: 0.9rem;
   }
 
-  .topPost .category {
+  .category {
     font-size: 0.8rem;
   }
 
-  .topPost .title {
+  .title {
     font-size: 1.2rem;
   }
 
-  .topPost .content {
+  .content {
     font-size: 0.9rem;
   }
 
-  .topPost .info {
+  .info {
     display: flex;
     align-items: center;
     gap: 0.8rem;
     font-size: 0.8rem;
   }
 
-  .topPost .isPublic {
+  .isPublic {
     padding: 0.5rem 0.8rem;
     border-radius: 8px;
     font-size: 0.8rem;
@@ -202,7 +197,7 @@
     height: 600px;
   }
 
-  .topPost .imageContainer {
+  .imageContainer {
     width: 360px;
     height: 360px;
     position: relative;
@@ -213,11 +208,11 @@
     border-radius: 12px;
   }
 
-  .topPost .image {
+  .image {
     border-radius: 12px;
   }
 
-  .topPost .infoCotainer {
+  .infoCotainer {
     flex: 1;
     max-width: 500px;
     height: 360px;
@@ -226,36 +221,36 @@
     gap: 0.5rem;
   }
 
-  .topPost .category {
+  .category {
     font-size: 0.9rem;
     color: #909eb1;
     font-weight: bold;
   }
 
-  .topPost .title {
+  .title {
     font-size: 2rem;
     color: #0a2855;
     font-weight: bold;
   }
 
-  .topPost .content {
+  .content {
     font-size: 1rem;
     flex: 1;
   }
 
-  .topPost .infoBox {
+  .infoBox {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
   }
 
-  .topPost .info {
+  .info {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
 
-  .topPost .isPublic {
+  .isPublic {
     color: #fff;
     background: #0a2855;
     padding: 0.5rem 1rem;

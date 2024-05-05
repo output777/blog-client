@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import styles from './aboutMe.module.scss';
+import styles from './aboutMe.module.css';
 import {FaExternalLinkAlt} from 'react-icons/fa';
 
 export default function AboutMe() {

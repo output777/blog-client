@@ -6,7 +6,7 @@ import {useCategoryStore} from '@/app/_store/categoryStore';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {useSession} from 'next-auth/react';
 import {useParams, useRouter} from 'next/navigation';
-import styles from './page.module.scss';
+import styles from './page.module.css';
 import InputField from '@/_components/InputField';
 import Button from '@/_components/Button';
 import 'react-quill/dist/quill.snow.css';
@@ -47,9 +47,7 @@ export default function UpdatePage() {
       formData.append('value', updateData.value);
       formData.append('is_public', updateData.public);
 
-      if (typeof updateData.image === 'string') {
-        formData.append('existingImageUrl', updateData.image);
-      } else if (updateData.image instanceof File) {
+      if (updateData.image instanceof File) {
         formData.append('image', updateData.image);
       }
       const response = await fetch(

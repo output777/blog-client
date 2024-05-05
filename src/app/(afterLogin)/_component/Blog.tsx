@@ -3,7 +3,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {queryClient} from '@/app/_lib/queryClient';
-import styles from './blog.module.scss';
+import styles from './blog.module.css';
 import {useBlogStore} from '@/app/_store/blogStore';
 
 type BlogProps = {userEmail?: string | null};
