@@ -12,10 +12,11 @@ export const {
     signIn: '/signin',
     newUser: '/signup',
   },
+  // ${process.env.NEXT_PUBLIC_API_URL}
   providers: [
     CredentialProvider({
       async authorize(credentials) {
-        const authResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signin`, {
+        const authResponse = await fetch(`https://api.hiblogs.com/signin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -53,7 +54,7 @@ export const {
           password: null,
           provider: account?.provider,
         };
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
+        const response = await fetch(`https://api.hiblogs.com/signup`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

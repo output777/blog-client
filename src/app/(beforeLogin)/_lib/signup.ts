@@ -22,7 +22,8 @@ export const onSubmitSignUp = async (prevState: any, formData: FormData) => {
     provider: 'credentials',
   };
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
+    // ${process.env.NEXT_PUBLIC_API_URL}
+    const response = await fetch(`https://api.hiblogs.com/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
