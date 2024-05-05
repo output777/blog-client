@@ -58,12 +58,12 @@
 .infoContent {
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .infoContent div {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   gap: 10px;
 }
 
@@ -78,11 +78,11 @@
 }
 
 .postContinaer {
-  // display: flex;
+  /* display: flex; */
 }
 
 .postContent {
-  // flex: 1;
+  /* // flex: 1; */
   background: #fff;
 }
 

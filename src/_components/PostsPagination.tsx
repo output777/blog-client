@@ -3,7 +3,7 @@ import {useBlogStore} from '@/app/_store/blogStore';
 import {useQuery} from '@tanstack/react-query';
 import Link from 'next/link';
 import {useRouter, useSearchParams, useParams} from 'next/navigation';
-import styles from './postPagination.module.scss';
+import styles from './postPagination.module.css';
 import Image from 'next/image';
 import Pagination from './Pagination';
 import TextContent from './TextContent';
@@ -129,9 +129,8 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
                           : `https://via.placeholder.com/100x100`
                       }
                       alt="img"
-                      layout="fill"
-                      objectFit="cover"
-                      objectPosition="center"
+                      width={100}
+                      height={100}
                     />
                   </div>
                   <div className={styles.infoCotainer}>

@@ -2,7 +2,7 @@
 
 import React, {ChangeEvent, useState} from 'react';
 import 'react-quill/dist/quill.snow.css';
-import styles from './page.module.scss';
+import styles from './page.module.css';
 import {useSession} from 'next-auth/react';
 import InputField from '@/_components/InputField';
 import Button from '@/_components/Button';

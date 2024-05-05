@@ -3,7 +3,7 @@
 import React from 'react';
 import {signOut} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
-import styles from './signout.module.scss';
+import styles from './signout.module.css';
 
 export default function SignoutButton() {
   const router = useRouter();

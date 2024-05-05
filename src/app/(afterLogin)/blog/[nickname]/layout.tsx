@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import Blog from '../../_component/Blog';
 import {auth} from '@/auth';
 import Categories from '../../_component/Categories';
-import styles from './layout.module.scss';
+import styles from './layout.module.css';
 
 type Props = {children: ReactNode};
 export default async function layout({children}: Props) {

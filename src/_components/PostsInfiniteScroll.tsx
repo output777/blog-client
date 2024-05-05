@@ -2,7 +2,7 @@
 import {useInfiniteQuery} from '@tanstack/react-query';
 import React, {useEffect, useRef} from 'react';
 import TextContent from './TextContent';
-import styles from './postInfiniteScroll.module.scss';
+import styles from './postInfiniteScroll.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -123,9 +123,8 @@ export default function PostsInfiniteScroll() {
                     className={styles.image}
                     src={item.image_url}
                     alt="img"
-                    layout="fill"
-                    objectFit="contain"
-                    objectPosition="center"
+                    width={360}
+                    height={360}
                   />
                 </div>
                 <div className={styles.infoCotainer}>

@@ -4,7 +4,7 @@ import {auth} from '@/auth';
 import BeforeMenu from '@/_components/BeforeMenu';
 import TechStack from '@/_components/TechStack';
 import AboutMe from '@/_components/AboutMe';
-import styles from './layout.module.scss';
+import styles from './layout.module.css';
 
 type Props = {children: ReactNode};
 export default async function Layout({children}: Props) {

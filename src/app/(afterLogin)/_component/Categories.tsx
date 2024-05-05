@@ -4,7 +4,7 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {queryClient} from '@/app/_lib/queryClient';
 import Link from 'next/link';
-import styles from './categories.module.scss';
+import styles from './categories.module.css';
 import {CategoryProps, useCategoryStore} from '@/app/_store/categoryStore';
 import {useParams} from 'next/navigation';
 import Image from 'next/image';

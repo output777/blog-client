@@ -3,7 +3,7 @@
 import React, {useEffect, useRef} from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import styles from './editor.module.scss';
+import styles from './editor.module.css';
 
 const modules = {
   toolbar: [

@@ -63,6 +63,10 @@
 
 .image {
   border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .infoCotainer {
@@ -94,7 +98,7 @@
 
 .infoBox {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
 }
@@ -129,10 +133,10 @@
     padding: 0 1rem;
   }
 
-  // .imageContainer {
-  //   width: 80px;
-  //   height: 80px;
-  // }
+  /* .imageContainer {
+     width: 80px;
+     height: 80px;
+   } */
 }
 
 @media (max-width: 600px) {
@@ -162,7 +166,7 @@
 @media (max-width: 450px) {
   .container {
     gap: 0.5rem;
-    // padding: 0 1rem;
+    /* padding: 0 1rem; */
   }
 
   .postsContainer {
