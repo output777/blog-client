@@ -46,11 +46,14 @@
   min-width: 350px;
   height: 17rem;
   border-radius: 0.5rem;
-  border: 1px solid none;
+  border: 1px solid transparent;
   background-color: #fff;
   position: relative;
   box-sizing: border-box;
   padding: 2rem 1.5rem;
+  box-shadow: 0px 7px 10px -4px rgba(10, 40, 85, 0.67);
+  -webkit-box-shadow: 0px 7px 10px -4px rgba(10, 40, 85, 0.67);
+  -moz-box-shadow: 0px 7px 10px -4px rgba(10, 40, 85, 0.67);
 }
 
 .linkBox {
@@ -74,12 +77,6 @@
 
 .pointer {
   cursor: pointer;
-}
-
-.shadow {
-  box-shadow: 0px 7px 10px -4px rgba(#0a2855, 0.67);
-  -webkit-box-shadow: 0px 7px 10px -4px rgba(#0a2855, 0.67);
-  -moz-box-shadow: 0px 7px 10px -4px rgba(#0a2855, 0.67);
 }
 
 .list {

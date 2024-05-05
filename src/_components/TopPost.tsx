@@ -5,6 +5,7 @@ import styles from './topPost.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import TextContent from './TextContent';
+import useSessionHandler from '@/app/_lib/useSession';
 
 interface PostProps {
   blog_id: number;
