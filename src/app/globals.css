@@ -1,4 +1,6 @@
-@import './reset.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .ql-align-center {
   text-align: center !important;
