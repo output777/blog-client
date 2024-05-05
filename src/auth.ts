@@ -78,4 +78,5 @@ export const {
       return baseUrl + '/blog';
     },
   },
+  secret: process.env.AUTH_SECRET,
 });
