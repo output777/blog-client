@@ -12,11 +12,10 @@ export const {
     signIn: '/signin',
     newUser: '/signup',
   },
-  // ${process.env.NEXT_PUBLIC_API_URL}
   providers: [
     CredentialProvider({
       async authorize(credentials) {
-        const authResponse = await fetch(`https://api.hiblogs.com/signin`, {
+        const authResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -46,7 +45,7 @@ export const {
     }),
   ],
   callbacks: {
-    signIn: async ({user, account, profile}) => {
+    signIn: async ({user, account}) => {
       if (account?.provider !== 'credentials') {
         const signupData = {
           email: user.email,
@@ -54,7 +53,7 @@ export const {
           password: null,
           provider: account?.provider,
         };
-        const response = await fetch(`https://api.hiblogs.com/signup`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -73,7 +72,6 @@ export const {
         currentProvider && currentProvider[1] === 'credentials'
           ? `${currentProvider[0]}`
           : `@${currentProvider?.[0]}`;
-
       return session;
     },
     redirect: async ({url, baseUrl}) => {
