@@ -15,27 +15,31 @@ export const {
   providers: [
     CredentialProvider({
       async authorize(credentials) {
-        const authResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signin`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: credentials.username,
-            password: credentials.password,
-          }),
-        });
+        try {
+          const authResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signin`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: credentials.username,
+              password: credentials.password,
+            }),
+          });
 
-        if (!authResponse.ok) {
-          return null;
+          if (!authResponse.ok) {
+            return null;
+          }
+          const user = await authResponse.json();
+          console.log('user', user);
+          return {
+            email: user.email,
+            nickname: user.name,
+            ...user,
+          };
+        } catch (err) {
+          console.error('로그인 처리 중 오류 발생:', err);
         }
-        const user = await authResponse.json();
-        console.log('user', user);
-        return {
-          email: user.email,
-          nickname: user.name,
-          ...user,
-        };
       },
     }),
     GoogleProvider({
@@ -78,5 +82,5 @@ export const {
       return baseUrl + '/blog';
     },
   },
-  secret: process.env.AUTH_SECRET || 'any random string',
+  // secret: process.env.AUTH_SECRET || 'any random string',
 });
