@@ -1,7 +1,6 @@
 'use client';
 
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
-import {useBlogStore} from '@/app/_store/blogStore';
 import {useCategoryStore} from '@/app/_store/categoryStore';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {useSession} from 'next-auth/react';
@@ -24,9 +23,10 @@ interface UpdateDataProps {
 
 export default function UpdatePage() {
   const session = useSession();
+
   const router = useRouter();
   const params = useParams();
-  const {blogValue} = useBlogStore();
+
   const {categoryValue} = useCategoryStore();
   const [value, setValue] = useState({
     title: '',
@@ -64,10 +64,12 @@ export default function UpdatePage() {
     },
   });
 
-  const {data, isLoading, isPending} = useQuery<PostProps>({
+  const {data, isLoading} = useQuery<PostProps>({
     queryKey: ['post', params?.postid],
     queryFn: async () => getPost(params?.postid as string),
   });
+
+  console.log('data', data);
 
   const handleFileInputClick = () => {
     if (fileInputRef.current) {
@@ -107,6 +109,14 @@ export default function UpdatePage() {
   };
 
   useEffect(() => {
+    if (session && params) {
+      decodeURIComponent(params?.nickname as string) !== session?.data?.user?.name
+        ? router.replace('/blog')
+        : null;
+    }
+  }, [session, params]);
+
+  useEffect(() => {
     if (!isLoading && data) {
       setValue((prev) => ({
         ...prev,
@@ -125,9 +135,6 @@ export default function UpdatePage() {
 
   return (
     <div className={styles.container}>
-      {/* <div>
-      <Button label="수정하기" className={styles.btn} onClick={handleUpdate} />
-      </div> */}
       <div className={styles.section}>
         <div className={styles.btnBox}>
           <Button label="수정하기" className={styles.btn} onClick={handleUpdate} />
@@ -203,9 +210,6 @@ export default function UpdatePage() {
             </div>
           </div>
         </div>
-        {/* <div>
-          <Button label="수정하기" className={styles.btn} onClick={handleUpdate} />
-        </div> */}
       </div>
       <Editor value={editorValue} onChange={handleEditorValue} />
     </div>

@@ -13,7 +13,7 @@ export default async function layout({children}: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.blogInfoBox}>
-        <Blog userEmail={userEmail} />
+        <Blog userEmail={userEmail} nickname={nickname} />
       </div>
       <div className={styles.mainContainer}>
         <div className={styles.categoriesContainer}>

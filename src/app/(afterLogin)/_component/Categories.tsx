@@ -23,11 +23,16 @@ export default function Categories({userEmail, nickname}: Props) {
   const [addCategoryValue, setAddCategoryValue] = useState('');
   const [show, setShow] = useState(false);
 
+  const decodedNickname = decodeURIComponent(params?.nickname as string);
+  const identification = decodedNickname === nickname;
+
+  console.log('categoryValue', categoryValue, categoryValue.length);
+
   const {isPending, data} = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/blog/categories?email=${userEmail}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/blog/categories?nickname=${decodedNickname}`,
         {
           method: 'GET',
           headers: {
@@ -134,11 +139,14 @@ export default function Categories({userEmail, nickname}: Props) {
 
   const addCategoryChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const {value} = e.target;
-    console.log(value);
     setAddCategoryValue(value);
   };
 
   const addCategoryEditHandler = () => {
+    if (categoryValue.length >= 5) {
+      return alert('카테고리는 최대 5개만 만들 수 있습니다');
+    }
+
     setIsEdit(false);
     setIsAddEdit(true);
   };
@@ -165,8 +173,6 @@ export default function Categories({userEmail, nickname}: Props) {
   const handleClose = () => {
     setShow(false);
   };
-
-  console.log('show', show);
 
   useEffect(() => {
     if (!isPending) {
@@ -199,18 +205,22 @@ export default function Categories({userEmail, nickname}: Props) {
       </div>
       <div className={`${styles.categoriesContainer} ${show ? styles.show : styles.none}`}>
         <div className={styles.mobileWriteBox}>
-          <Link href={`/blog/${nickname}/write`} className={styles.mobileWriteBtn}>
-            글쓰기
-          </Link>
+          {identification ? (
+            <Link href={`/blog/${nickname}/write`} className={styles.mobileWriteBtn}>
+              글쓰기
+            </Link>
+          ) : null}
           <div className={styles.categoryClose} onClick={handleClose}>
             닫기
           </div>
         </div>
-        <Link href={`/blog/${nickname}/write`} className={styles.writeBtn}>
-          글쓰기
-        </Link>
+        {identification ? (
+          <Link href={`/blog/${nickname}/write`} className={styles.writeBtn}>
+            글쓰기
+          </Link>
+        ) : null}
         <Link
-          href={`/blog/${nickname}`}
+          href={`/blog/${decodedNickname}`}
           className={`${styles.all} ${params?.categoryid === undefined ? styles.clicked : ''}`}
         >
           전체보기
@@ -233,7 +243,7 @@ export default function Categories({userEmail, nickname}: Props) {
           <div className={styles.categoriesBox}>
             {data.categories.map((category: CategoryProps) => (
               <Link
-                href={`/blog/${nickname}/category/${category.id}`}
+                href={`/blog/${decodedNickname}/category/${category.id}`}
                 key={`category-${category.id}`}
                 className={params?.categoryid === category.id.toString() ? styles.clicked : ''}
               >
@@ -242,40 +252,44 @@ export default function Categories({userEmail, nickname}: Props) {
             ))}
           </div>
         )}
-        {isAddEdit && !isEdit ? (
-          <div className={styles.addEditInputBox}>
-            <input
-              type="text"
-              className={styles.addEditInput}
-              value={addCategoryValue}
-              onChange={addCategoryChangeHandler}
-            />
-            <div className={styles.addEditBtns}>
-              <button onClick={addCategorySaveHandler}>추가</button>
-              <button onClick={addCategoryCancelHandler}>취소</button>
+        {identification ? (
+          isAddEdit && !isEdit ? (
+            <div className={styles.addEditInputBox}>
+              <input
+                type="text"
+                className={styles.addEditInput}
+                value={addCategoryValue}
+                onChange={addCategoryChangeHandler}
+              />
+              <div className={styles.addEditBtns}>
+                <button onClick={addCategorySaveHandler}>추가</button>
+                <button onClick={addCategoryCancelHandler}>취소</button>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className={styles.addEditBox}>
-            <button className={styles.addEditBtn} onClick={addCategoryEditHandler}>
-              카테고리 추가
-            </button>
-          </div>
-        )}
-        {!isAddEdit && isEdit ? (
-          <div className={styles.editButtonBox}>
-            <button onClick={saveHandler}>저장</button>
-            <button onClick={cancelHandler}>취소</button>
-          </div>
-        ) : (
-          <>
-            {data.categories.length === 0 ? null : (
-              <button className={styles.editButton} onClick={editHandler}>
-                카테고리 수정
+          ) : (
+            <div className={styles.addEditBox}>
+              <button className={styles.addEditBtn} onClick={addCategoryEditHandler}>
+                카테고리 추가
               </button>
-            )}
-          </>
-        )}
+            </div>
+          )
+        ) : null}
+        {identification ? (
+          !isAddEdit && isEdit ? (
+            <div className={styles.editButtonBox}>
+              <button onClick={saveHandler}>저장</button>
+              <button onClick={cancelHandler}>취소</button>
+            </div>
+          ) : (
+            <>
+              {data.categories.length === 0 ? null : (
+                <button className={styles.editButton} onClick={editHandler}>
+                  카테고리 수정
+                </button>
+              )}
+            </>
+          )
+        ) : null}
       </div>
     </>
   );

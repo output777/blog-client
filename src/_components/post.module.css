@@ -67,6 +67,11 @@
   gap: 10px;
 }
 
+.infoContent a {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
 .infoContent span {
   font-size: 0.9rem;
   font-weight: bold;

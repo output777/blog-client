@@ -50,6 +50,10 @@ export default function Post({nickname}: {nickname?: string | null}) {
   const router = useRouter();
   const params = useParams();
   console.log('params', params);
+
+  const decodedNickname = decodeURIComponent(params?.nickname as string);
+  const identification = decodedNickname === nickname;
+
   const deleteMutation = useMutation({
     mutationFn: deletePost,
     onSuccess: () => {
@@ -84,27 +88,31 @@ export default function Post({nickname}: {nickname?: string | null}) {
         <div className={styles.mainContent}>
           <div className={styles.categroyAndBtnContnet}>
             <span className={styles.category}>{data?.category_name}</span>
-            <div className={styles.btnBox}>
-              <Link
-                href={`/blog/${nickname}/category/${params?.categoryid}/post/${params?.postid}/update`}
-                className={styles.button}
-              >
-                수정
-              </Link>
-              <button
-                className={styles.button}
-                onClick={() => deletHandler(params?.postid as string)}
-              >
-                삭제
-              </button>
-            </div>
+            {identification ? (
+              <div className={styles.btnBox}>
+                <Link
+                  href={`/blog/${nickname}/category/${params?.categoryid}/post/${params?.postid}/update`}
+                  className={styles.button}
+                >
+                  수정
+                </Link>
+                <button
+                  className={styles.button}
+                  onClick={() => deletHandler(params?.postid as string)}
+                >
+                  삭제
+                </button>
+              </div>
+            ) : null}
           </div>
           <div className={styles.titleContent}>
             <h2>{data?.title}</h2>
           </div>
           <div className={styles.infoContent}>
             <div>
-              <span className={styles.nickname}>{nickname}</span>
+              <Link href={`/blog/${decodedNickname}`} className={styles.nickname}>
+                {nickname}
+              </Link>
               <span className={styles.isPublic}>{data?.is_public === 'Y' ? '공개' : '비공개'}</span>
             </div>
             <div>
