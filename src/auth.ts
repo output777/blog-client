@@ -83,5 +83,5 @@ export const {
       return baseUrl + '/blog';
     },
   },
-  // secret: process.env.AUTH_SECRET || 'any random string',
+  secret: process.env.AUTH_SECRET || 'any random string',
 });

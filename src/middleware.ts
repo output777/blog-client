@@ -4,10 +4,10 @@ import {auth} from './auth';
 export async function middleware() {
   const session = await auth();
   if (!session) {
-    return NextResponse.redirect('/signin');
+    // return NextResponse.redirect('/signin');
   }
 }
 
 export const config = {
-  matcher: ['/blog'],
+  // matcher: ['/blog'],
 };
