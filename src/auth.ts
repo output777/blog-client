@@ -28,7 +28,8 @@ export const {
           });
 
           if (!authResponse.ok) {
-            return null;
+            console.error('인증 실패:', await authResponse.text()); // 로그에 더 많은 정보를 출력할 수 있도록 수정
+            throw new Error('CredentialsSignin');
           }
           const user = await authResponse.json();
           console.log('user', user);
