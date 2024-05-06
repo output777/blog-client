@@ -74,6 +74,10 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
   const {blogValue} = useBlogStore();
   const categoryId = params.categoryid || '';
 
+  const decodedNickname = decodeURIComponent(params?.nickname as string);
+  const identification = decodedNickname === nickname;
+  console.log('identification', identification);
+
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const {data, isLoading} = useQuery<DataProps>({
     queryKey: ['posts', currentPage],
@@ -90,10 +94,12 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
 
   const pageHandler = (page: string) => {
     const isCategory = !!categoryId ? `/category/${categoryId}` : '';
-    router.push(`/blog/${nickname}${isCategory}?page=${page}`);
+    router.push(`/blog/${decodedNickname}${isCategory}?page=${page}`);
   };
 
   const totalPages = data?.pagination.totalPages as number;
+
+  console.log('data>>>>', data);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -113,8 +119,9 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
       ) : (
         <div className={styles.container}>
           <div className={styles.postsContainer}>
-            {data?.posts.map((post: PostProps) => {
-              return (
+            {data?.posts
+              .filter((post: PostProps) => identification || post.is_public === 'Y')
+              .map((post: PostProps) => (
                 <Link
                   href={`/blog/${nickname}/category/${post.category_id}/post/${post.post_id}`}
                   key={post.post_id}
@@ -148,8 +155,7 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
                     </div>
                   </div>
                 </Link>
-              );
-            })}
+              ))}
           </div>
           {data?.posts.length === 0 ? null : (
             <Pagination

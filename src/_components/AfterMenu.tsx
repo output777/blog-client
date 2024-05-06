@@ -5,8 +5,6 @@ import SignoutButton from '@/app/(afterLogin)/_component/SignoutButton';
 
 type Props = {nickname?: string | null; email?: string | null};
 export default function AtferMenu({nickname, email}: Props) {
-  console.log('nickname', nickname, 'email', email);
-
   return (
     <>
       <div className={styles.container}>

@@ -31,6 +31,12 @@
   height: 100%;
 }
 
+@media (max-width: 1200px) {
+  .mainContainer {
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 762px) {
   .blogInfoBox {
     margin-top: 60px;
@@ -42,15 +48,10 @@
     flex-direction: column;
     flex: 1;
     gap: 0.5rem;
+    padding-top: 0rem;
   }
 
   .categoriesContainer {
     width: 100%;
-  }
-}
-
-@media (max-width: 1200px) {
-  .mainContainer {
-    gap: 1rem;
   }
 }

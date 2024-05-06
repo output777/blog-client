@@ -35,7 +35,7 @@ interface PostsInfiniteScrollProps {
 async function getInfinitePosts(pageParam = 1): Promise<PageData | undefined> {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/infinitePosts?page=${pageParam}&limit=3`,
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/infinitePosts?page=${pageParam}&limit=4`,
       {
         method: 'GET',
         headers: {
@@ -121,10 +121,10 @@ export default function PostsInfiniteScroll() {
                 <div className={styles.imageContainer}>
                   <Image
                     className={styles.image}
-                    src={item.image_url}
+                    src={item.image_url || 'https://via.placeholder.com/240'}
                     alt="img"
-                    width={360}
-                    height={360}
+                    width={240}
+                    height={240}
                   />
                 </div>
                 <div className={styles.infoCotainer}>
