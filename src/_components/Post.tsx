@@ -47,8 +47,8 @@ async function deletePost(postId: string) {
     console.error(err);
   }
 }
-
-export default function Post({nickname}: {nickname?: string | null}) {
+type Props = {nickname?: string | null};
+export default function Post({nickname}: Props) {
   const {setLoading} = useLoadingStore();
   const router = useRouter();
   const params = useParams();
@@ -73,8 +73,10 @@ export default function Post({nickname}: {nickname?: string | null}) {
   }, [setLoading, isFetching]);
 
   useEffect(() => {
-    if (params && nickname) {
+    if (params) {
       setDecodedNickname(decodeURIComponent(params.nickname as string));
+    }
+    if (nickname) {
       setIdentification(decodeURIComponent(params.nickname as string) === nickname);
     }
   }, [params, nickname]);

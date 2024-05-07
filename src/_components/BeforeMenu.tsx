@@ -14,6 +14,11 @@ export default function BeforeMenu() {
         <div className={styles.menuContainer}>
           <nav className={styles.nav}>
             <div className={styles.icon}>
+              <Link href="/blog">
+                <span>블로그</span>
+              </Link>
+            </div>
+            <div className={styles.icon}>
               <Link href="/signin" className={styles.icon}>
                 <span>로그인</span>
               </Link>

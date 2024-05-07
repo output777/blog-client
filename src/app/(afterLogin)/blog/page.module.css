@@ -13,7 +13,7 @@
   align-items: center;
   font-size: 3rem;
   background: #0a2855;
-  width: 100%;
+  width: 100dvw;
   height: 200px;
   color: #fff;
   margin-top: 4rem;
@@ -48,4 +48,20 @@
 .infinitePostContainer {
   width: 80%;
   margin-top: 2rem;
+}
+
+@media (max-width: 700px) {
+  .backgroundBox {
+    font-size: 2rem;
+    background: #0a2855;
+    height: 150px;
+  }
+}
+
+@media (max-width: 500px) {
+  .backgroundBox {
+    font-size: 1.5rem;
+    background: #0a2855;
+    height: 100px;
+  }
 }

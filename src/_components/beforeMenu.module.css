@@ -1,4 +1,16 @@
+/* .container {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  height: 4rem;
+  background: #fff;
+} */
+
 .container {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 1rem 2rem;

@@ -2,9 +2,13 @@ import React from 'react';
 import styles from './afterMenu.module.css';
 import Link from 'next/link';
 import SignoutButton from '@/app/(afterLogin)/_component/SignoutButton';
+import {auth} from '@/auth';
 
 type Props = {nickname?: string | null; email?: string | null};
-export default function AtferMenu({nickname, email}: Props) {
+export default async function AtferMenu({nickname, email}: Props) {
+  // const session = await auth();
+  // console.log('session', session);
+
   return (
     <>
       <div className={styles.container}>
