@@ -5,6 +5,7 @@ import './globals.css';
 import Head from 'next/head';
 import {QueryClientProviderWithClient} from '@/_components/QueryClientProviderWithClient';
 import AuthSession from '@/_components/AuthSession';
+import Loading from '@/_components/Loading';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <body className={`${inter.className}`}>
           <QueryClientProviderWithClient>
             <AuthSession>
+              <Loading />
               <div>{children}</div>
             </AuthSession>
           </QueryClientProviderWithClient>

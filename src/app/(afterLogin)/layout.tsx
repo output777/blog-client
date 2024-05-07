@@ -2,6 +2,7 @@ import {ReactNode} from 'react';
 import AtferMenu from '@/_components/AfterMenu';
 import {auth} from '@/auth';
 import {redirect} from 'next/navigation';
+import Loading from '@/_components/Loading';
 
 type Props = {children: ReactNode};
 export default async function Layout({children}: Props) {

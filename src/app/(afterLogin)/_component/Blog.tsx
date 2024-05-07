@@ -6,10 +6,12 @@ import {queryClient} from '@/app/_lib/queryClient';
 import styles from './blog.module.css';
 import {useBlogStore} from '@/app/_store/blogStore';
 import {useParams} from 'next/navigation';
+import {useLoadingStore} from '@/app/_store/loadingStore';
 
 type Props = {userEmail?: string | null; nickname?: string | null};
 type PatchBlogProps = {blogId: string; blogTitle: string};
 export default function Blog({userEmail, nickname}: Props) {
+  const {setLoading} = useLoadingStore();
   const params = useParams();
   const {setBlogValue} = useBlogStore();
   const [isEdit, setIsEdit] = useState(false);
@@ -18,7 +20,7 @@ export default function Blog({userEmail, nickname}: Props) {
   const decodedNickname = decodeURIComponent(params?.nickname as string);
   const identification = decodedNickname === nickname;
 
-  const {isPending, error, data} = useQuery({
+  const {isFetching, error, data} = useQuery({
     queryKey: ['blog'],
     queryFn: async () => {
       const response = await fetch(
@@ -70,18 +72,18 @@ export default function Blog({userEmail, nickname}: Props) {
   };
 
   useEffect(() => {
-    if (!isPending) {
+    setLoading(isFetching);
+  }, [setLoading, isFetching]);
+
+  useEffect(() => {
+    if (!isFetching) {
       setBlogValue({
         userId: data?.blog.user_id,
         blogId: data?.blog.blog_id,
       });
-      setEditBlogTitle(data.blog.title);
+      setEditBlogTitle(data.blog?.title);
     }
-  }, [isPending, data, setBlogValue]);
-
-  if (isPending) {
-    return <div>로딩중...</div>;
-  }
+  }, [isFetching, data, setBlogValue]);
 
   return (
     <div className={styles.container}>
@@ -96,7 +98,7 @@ export default function Blog({userEmail, nickname}: Props) {
         </div>
       ) : (
         <div className={styles.blogBox}>
-          <h3 className={styles.title}>{data?.blog.title}</h3>
+          <h3 className={styles.title}>{data?.blog?.title}</h3>
         </div>
       )}
       {identification ? (

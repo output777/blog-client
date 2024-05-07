@@ -8,6 +8,7 @@ import styles from './categories.module.css';
 import {CategoryProps, useCategoryStore} from '@/app/_store/categoryStore';
 import {useParams} from 'next/navigation';
 import Image from 'next/image';
+import {useLoadingStore} from '@/app/_store/loadingStore';
 
 type Props = {userEmail?: string | null; nickname?: string | null};
 interface CategoryDataProps {
@@ -16,19 +17,17 @@ interface CategoryDataProps {
 }
 
 export default function Categories({userEmail, nickname}: Props) {
+  const {setLoading} = useLoadingStore();
   const params = useParams();
   const {categoryValue, setCategoryValue} = useCategoryStore();
   const [isEdit, setIsEdit] = useState(false);
   const [isAddEdit, setIsAddEdit] = useState(false);
   const [addCategoryValue, setAddCategoryValue] = useState('');
   const [show, setShow] = useState(false);
+  const [decodedNickname, setDecodedNickname] = useState('');
+  const [identification, setIdentification] = useState(false);
 
-  const decodedNickname = decodeURIComponent(params?.nickname as string);
-  const identification = decodedNickname === nickname;
-
-  console.log('categoryValue', categoryValue, categoryValue.length);
-
-  const {isPending, data} = useQuery({
+  const {isFetching, data} = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
       const response = await fetch(
@@ -42,6 +41,7 @@ export default function Categories({userEmail, nickname}: Props) {
       );
       return await response.json();
     },
+    enabled: !!decodedNickname,
   });
 
   const updateMutation = useMutation({
@@ -84,8 +84,6 @@ export default function Categories({userEmail, nickname}: Props) {
 
   const createMutation = useMutation({
     mutationFn: async (categoryData: CategoryDataProps) => {
-      console.log('categoryData', categoryData);
-
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/category`, {
         method: 'POST',
         headers: {
@@ -175,9 +173,19 @@ export default function Categories({userEmail, nickname}: Props) {
   };
 
   useEffect(() => {
-    if (!isPending) {
+    setLoading(isFetching);
+  }, [setLoading, isFetching]);
+
+  useEffect(() => {
+    if (params && nickname) {
+      setDecodedNickname(decodeURIComponent(params.nickname as string));
+      setIdentification(decodeURIComponent(params.nickname as string) === nickname);
+    }
+  }, [params, nickname]);
+
+  useEffect(() => {
+    if (!isFetching) {
       const initialValues = data?.categories.map((cateory: CategoryProps) => {
-        console.log('cateory', cateory);
         const data = {
           id: cateory.id,
           name: cateory.name,
@@ -186,11 +194,7 @@ export default function Categories({userEmail, nickname}: Props) {
       });
       setCategoryValue(initialValues);
     }
-  }, [isPending, data]);
-
-  if (isPending) {
-    return <div>로딩중...</div>;
-  }
+  }, [isFetching, data, setCategoryValue]);
 
   return (
     <>
@@ -241,7 +245,7 @@ export default function Categories({userEmail, nickname}: Props) {
           </div>
         ) : (
           <div className={styles.categoriesBox}>
-            {data.categories.map((category: CategoryProps) => (
+            {data?.categories?.map((category: CategoryProps) => (
               <Link
                 href={`/blog/${decodedNickname}/category/${category.id}`}
                 key={`category-${category.id}`}
@@ -282,7 +286,7 @@ export default function Categories({userEmail, nickname}: Props) {
             </div>
           ) : (
             <>
-              {data.categories.length === 0 ? null : (
+              {data?.categories.length === 0 ? null : (
                 <button className={styles.editButton} onClick={editHandler}>
                   카테고리 수정
                 </button>

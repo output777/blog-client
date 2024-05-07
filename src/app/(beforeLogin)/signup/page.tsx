@@ -26,6 +26,9 @@ function showMessage(message: string) {
   if (message === 'already_Both') {
     return '이미 사용 중인 아이디입니다.';
   }
+  if (message === 'Nickname cannot start with @') {
+    return '닉네임은 @로 시작할 수 없습니다.';
+  }
 }
 
 export default function SignUpPage() {

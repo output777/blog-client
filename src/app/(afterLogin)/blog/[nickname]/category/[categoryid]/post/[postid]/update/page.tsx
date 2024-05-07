@@ -12,6 +12,7 @@ import 'react-quill/dist/quill.snow.css';
 import {PostProps} from '@/_components/PostsPagination';
 import {getPost} from '@/_components/Post';
 import Editor from '@/_components/Editor';
+import {useLoadingStore} from '@/app/_store/loadingStore';
 
 interface UpdateDataProps {
   title: string;
@@ -22,10 +23,12 @@ interface UpdateDataProps {
 }
 
 export default function UpdatePage() {
+  const {setLoading} = useLoadingStore();
   const session = useSession();
 
-  const router = useRouter();
   const params = useParams();
+  const router = useRouter();
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 
   const {categoryValue} = useCategoryStore();
   const [value, setValue] = useState({
@@ -64,12 +67,10 @@ export default function UpdatePage() {
     },
   });
 
-  const {data, isLoading} = useQuery<PostProps>({
+  const {data, isFetching} = useQuery<PostProps>({
     queryKey: ['post', params?.postid],
     queryFn: async () => getPost(params?.postid as string),
   });
-
-  console.log('data', data);
 
   const handleFileInputClick = () => {
     if (fileInputRef.current) {
@@ -85,6 +86,12 @@ export default function UpdatePage() {
   const handleImageFile = (e: ChangeEvent<HTMLInputElement>) => {
     const {files} = e.target;
     if (files && files.length > 0) {
+      const file = files[0];
+      if (file.size > MAX_FILE_SIZE) {
+        alert('2MB 이하의 이미지를 업로드하세요');
+        e.target.value = ''; // 입력 필드 초기화
+        return;
+      }
       setImageFile(files[0]);
       setFileName(files[0].name);
     } else {
@@ -98,6 +105,17 @@ export default function UpdatePage() {
   };
 
   const handleUpdate = async () => {
+    if (value.title.trim() === '') {
+      return alert('제목을 입력하세요');
+    }
+    if (value.categoryId === '') {
+      return alert('카테고리를 선택하세요');
+    }
+    // 여기 띄어쓰기라도 입력하면 tag가 생기는데 이것도 막을지 고민중
+    if (editorValue === '') {
+      return alert('내용을 입력하세요');
+    }
+
     const updateData = {
       title: value.title,
       categoryId: value.categoryId,
@@ -109,6 +127,10 @@ export default function UpdatePage() {
   };
 
   useEffect(() => {
+    setLoading(isFetching);
+  }, [setLoading, isFetching]);
+
+  useEffect(() => {
     if (session && params) {
       decodeURIComponent(params?.nickname as string) !== session?.data?.user?.name
         ? router.replace('/blog')
@@ -117,7 +139,7 @@ export default function UpdatePage() {
   }, [session, params]);
 
   useEffect(() => {
-    if (!isLoading && data) {
+    if (!isFetching && data) {
       setValue((prev) => ({
         ...prev,
         title: data.title,
@@ -127,11 +149,7 @@ export default function UpdatePage() {
       setEditorValue(data.content);
       setFileName(data.image_url);
     }
-  }, [isLoading, data]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  }, [isFetching, data]);
 
   return (
     <div className={styles.container}>
