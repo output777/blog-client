@@ -12,8 +12,8 @@ import {useLoadingStore} from '@/app/_store/loadingStore';
 
 type Props = {userEmail?: string | null; nickname?: string | null};
 interface CategoryDataProps {
-  email: string | null | undefined;
-  categoryName: string;
+  email?: string | null | undefined;
+  categoryName?: string;
 }
 
 export default function Categories({userEmail, nickname}: Props) {
@@ -177,8 +177,10 @@ export default function Categories({userEmail, nickname}: Props) {
   }, [setLoading, isFetching]);
 
   useEffect(() => {
-    if (params && nickname) {
+    if (params) {
       setDecodedNickname(decodeURIComponent(params.nickname as string));
+    }
+    if (nickname) {
       setIdentification(decodeURIComponent(params.nickname as string) === nickname);
     }
   }, [params, nickname]);

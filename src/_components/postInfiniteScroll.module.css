@@ -3,6 +3,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-template-rows: auto;
   grid-gap: 3rem;
+  box-sizing: border-box;
 }
 
 .infinitePostContainer {
@@ -87,4 +88,10 @@
   background: #0a2855;
   padding: 0.5rem 1rem;
   border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+  .infinitePost {
+    padding: 0.5rem;
+  }
 }

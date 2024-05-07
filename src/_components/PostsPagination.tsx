@@ -17,7 +17,7 @@ interface FetchPostsProps {
 }
 
 interface PostsPaginationProps {
-  nickname: string | null | undefined;
+  nickname?: string | null | undefined;
 }
 
 export interface PostProps {
@@ -78,13 +78,11 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
   const [categoryId, setCategoryId] = useState('');
   const [decodedNickname, setDecodedNickname] = useState('');
   const [identification, setIdentification] = useState(false);
-
-  console.log('blogValue', blogValue);
-  console.log('identification', identification);
+  const [queryEnabled, setQueryEnabled] = useState(false);
 
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const {data, isFetching} = useQuery<DataProps>({
-    queryKey: ['posts', currentPage],
+    queryKey: ['posts', currentPage, blogValue.blogId, categoryId],
     queryFn: async () => {
       const fetchData = {
         blogId: blogValue.blogId,
@@ -93,8 +91,19 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
       };
       return await getPosts(fetchData);
     },
-    enabled: !!blogValue.blogId && !!decodedNickname && !!params,
+    enabled: queryEnabled,
   });
+
+  console.log('blogValue', blogValue, 'categoryId', categoryId);
+  console.log('queryEnabled', queryEnabled);
+  console.log(
+    '!!blogValue.blogId',
+    !!blogValue.blogId,
+    '!!decodedNickname',
+    !!decodedNickname,
+    '!!params',
+    !!params
+  );
 
   const pageHandler = (page: string) => {
     router.push(`/blog/${decodedNickname}/category/${categoryId}?page=${page}`);
@@ -103,14 +112,20 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
   const totalPages = data?.pagination.totalPages as number;
 
   useEffect(() => {
+    setQueryEnabled(!!blogValue.blogId && !!decodedNickname && !!params);
+  }, [blogValue.blogId, decodedNickname, params]);
+
+  useEffect(() => {
     setLoading(isFetching);
   }, [setLoading, isFetching]);
 
   useEffect(() => {
-    if (params && nickname) {
+    if (params) {
       setDecodedNickname(decodeURIComponent(params.nickname as string));
-      setIdentification(decodeURIComponent(params.nickname as string) === nickname);
       setCategoryId(params?.categoryid as string);
+    }
+    if (nickname) {
+      setIdentification(decodeURIComponent(params.nickname as string) === nickname);
     }
   }, [params, nickname]);
 

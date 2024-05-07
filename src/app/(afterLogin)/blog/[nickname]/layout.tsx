@@ -10,6 +10,8 @@ export default async function layout({children}: Props) {
   const userEmail = session?.user?.email;
   const nickname = session?.user?.name;
 
+  console.log('session', session);
+
   return (
     <div className={styles.container}>
       <div className={styles.blogInfoBox}>
