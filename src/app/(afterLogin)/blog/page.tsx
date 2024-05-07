@@ -6,7 +6,7 @@ export default async function BlogPage() {
   return (
     <div className={styles.container}>
       <div className={styles.backgroundBox}>
-        <div>Blog</div>
+        <div>HiBlog</div>
         {/* <div className={styles.searchBox}>
           <input className={styles.searchInput} type="text" placeholder="Search" />
         </div> */}

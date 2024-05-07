@@ -8,10 +8,12 @@ interface Props {
   disabled?: boolean;
 }
 
-export default function Button({label, className, type = 'button', onClick, disabled}: Props) {
+function Button({label, className, type = 'button', onClick, disabled}: Props) {
   return (
     <button className={className} type={type} onClick={onClick} disabled={disabled}>
       {label}
     </button>
   );
 }
+
+export default React.memo(Button);

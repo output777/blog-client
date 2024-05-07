@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import styles from '../signup/page.module.css';
 import {useRouter} from 'next/navigation';

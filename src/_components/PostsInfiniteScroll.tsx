@@ -1,11 +1,13 @@
 'use client';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import React, {useEffect, useRef} from 'react';
-import TextContent from './TextContent';
 import styles from './postInfiniteScroll.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import {useLoadingStore} from '@/app/_store/loadingStore';
+import dynamic from 'next/dynamic';
+
+const TextContent = dynamic(() => import('./TextContent'));
 
 interface PostProps {
   blog_id: number;

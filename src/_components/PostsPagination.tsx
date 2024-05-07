@@ -6,9 +6,11 @@ import {useRouter, useSearchParams, useParams} from 'next/navigation';
 import styles from './postPagination.module.css';
 import Image from 'next/image';
 import Pagination from './Pagination';
-import TextContent from './TextContent';
 import {useLoadingStore} from '@/app/_store/loadingStore';
 import {useEffect, useState} from 'react';
+import dynamic from 'next/dynamic';
+
+const TextContent = dynamic(() => import('./TextContent'));
 
 interface FetchPostsProps {
   blogId: number | null;

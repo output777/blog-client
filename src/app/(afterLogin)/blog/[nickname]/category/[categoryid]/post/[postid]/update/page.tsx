@@ -11,8 +11,9 @@ import Button from '@/_components/Button';
 import 'react-quill/dist/quill.snow.css';
 import {PostProps} from '@/_components/PostsPagination';
 import {getPost} from '@/_components/Post';
-import Editor from '@/_components/Editor';
 import {useLoadingStore} from '@/app/_store/loadingStore';
+import dynamic from 'next/dynamic';
+const Editor = dynamic(() => import('@/_components/Editor'));
 
 interface UpdateDataProps {
   title: string;

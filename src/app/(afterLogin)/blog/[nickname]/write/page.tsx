@@ -1,16 +1,17 @@
 'use client';
 
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import 'react-quill/dist/quill.snow.css';
 import styles from './page.module.css';
 import {useSession} from 'next-auth/react';
 import InputField from '@/_components/InputField';
 import Button from '@/_components/Button';
-import {useCategoryStore} from '@/app/_store/categoryStore';
 import {useBlogStore} from '@/app/_store/blogStore';
 import {useMutation} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
-import Editor from '@/_components/Editor';
+import dynamic from 'next/dynamic';
+const Editor = dynamic(() => import('@/_components/Editor'));
+const CategoryOptions = dynamic(() => import('@/_components/CategoryOptions'));
 
 interface PostDataProps {
   title: string;
@@ -27,7 +28,6 @@ export default function WritePage() {
   const router = useRouter();
   const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   const {blogValue} = useBlogStore();
-  const {categoryValue} = useCategoryStore();
   const [value, setValue] = useState({
     title: '',
     categoryId: '',
@@ -65,10 +65,13 @@ export default function WritePage() {
     },
   });
 
-  const handleValue = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
-    const {value} = e.target;
-    setValue((prev) => ({...prev, [field]: value}));
-  };
+  const handleValue = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
+      const {value} = e.target;
+      setValue((prev) => ({...prev, [field]: value}));
+    },
+    []
+  );
 
   const handleImageFile = (e: ChangeEvent<HTMLInputElement>) => {
     const {files} = e.target;
@@ -89,7 +92,7 @@ export default function WritePage() {
     setEditorValue(value);
   };
 
-  const handlePost = async () => {
+  const handlePost = useCallback(async () => {
     if (value.title.trim() === '') {
       return alert('제목을 입력하세요');
     }
@@ -111,7 +114,7 @@ export default function WritePage() {
       blogId: blogValue.blogId?.toString(),
     };
     createMutation.mutate(postData);
-  };
+  }, [value, editorValue, imageFile, blogValue, createMutation]);
 
   return (
     <div className={styles.container}>
@@ -138,12 +141,7 @@ export default function WritePage() {
               value={value.categoryId}
               onChange={(e) => handleValue(e, 'categoryId')}
             >
-              <option value={''}>카테고리를 선택하세요</option>
-              {categoryValue.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
+              <CategoryOptions />
             </select>
           </div>
           <div className={styles.imageBox}>
