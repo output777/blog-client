@@ -1,4 +1,3 @@
-// 'use client';
 import React from 'react';
 import {signIn} from 'next-auth/react';
 import styles from './googleLoginButton.module.css';

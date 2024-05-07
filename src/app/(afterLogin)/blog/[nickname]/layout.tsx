@@ -1,16 +1,14 @@
 import React, {ReactNode} from 'react';
-import Blog from '../../_component/Blog';
 import {auth} from '@/auth';
-import Categories from '../../_component/Categories';
 import styles from './layout.module.css';
+import Blog from '../../_component/Blog';
+import Categories from '../../_component/Categories';
 
 type Props = {children: ReactNode};
 export default async function layout({children}: Props) {
   const session = await auth();
   const userEmail = session?.user?.email;
   const nickname = session?.user?.name;
-
-  console.log('session', session);
 
   return (
     <div className={styles.container}>
