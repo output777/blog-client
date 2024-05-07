@@ -5,6 +5,7 @@ import TextContent from './TextContent';
 import styles from './postInfiniteScroll.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
+import {useLoadingStore} from '@/app/_store/loadingStore';
 
 interface PostProps {
   blog_id: number;
@@ -27,11 +28,6 @@ interface PageData {
   nextCursor?: number | null;
 }
 
-interface PostsInfiniteScrollProps {
-  pageParams: number[];
-  pages: PageData[];
-}
-
 async function getInfinitePosts(pageParam = 1): Promise<PageData | undefined> {
   try {
     const response = await fetch(
@@ -49,7 +45,6 @@ async function getInfinitePosts(pageParam = 1): Promise<PageData | undefined> {
     }
 
     const result = await response.json();
-    console.log('result', result);
     return {
       items: result.items,
       nextCursor: result.nextPage,
@@ -60,34 +55,27 @@ async function getInfinitePosts(pageParam = 1): Promise<PageData | undefined> {
 }
 
 export default function PostsInfiniteScroll() {
+  const {setLoading} = useLoadingStore();
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
-  const {data, fetchNextPage, hasNextPage, isFetchingNextPage, status} = useInfiniteQuery({
-    queryKey: ['infinite'],
-    queryFn: async ({pageParam}) => await getInfinitePosts(pageParam),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      console.log('lastPage', lastPage);
-      console.log('allPages', allPages);
-      // 마지막 페이지에서 다음 페이지 번호를 결정
-      return lastPage?.nextCursor;
-    },
-  });
-
-  console.log('data>>>', data);
-  // console.log('fetchNextPage', fetchNextPage);
-  // console.log('hasNextPage', hasNextPage());
-  // console.log('isFetchingNextPage', isFetchingNextPage);
+  const {data, fetchNextPage, hasNextPage, isFetchingNextPage, status, isFetching} =
+    useInfiniteQuery({
+      queryKey: ['infinite'],
+      queryFn: async ({pageParam}) => await getInfinitePosts(pageParam),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPages) => {
+        // 마지막 페이지에서 다음 페이지 번호를 결정
+        return lastPage?.nextCursor;
+      },
+    });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        console.log('entries', entries, entries[0]);
-        console.log('hasNextPage', hasNextPage);
         if (entries[0].isIntersecting && hasNextPage) {
           fetchNextPage();
         }
       },
-      {threshold: 1.0}
+      {threshold: 0.5}
     );
 
     if (loadMoreRef.current) {
@@ -99,19 +87,14 @@ export default function PostsInfiniteScroll() {
     };
   }, [hasNextPage, fetchNextPage]);
 
-  if (status === 'pending') {
-    return <div>Loading...</div>;
-  }
-  if (status === 'error') {
-    return <div>Error loading data</div>;
-  }
+  useEffect(() => {
+    setLoading(isFetching);
+  }, [setLoading, isFetching]);
 
   return (
     <div className={styles.container}>
-      {data.pages?.map((page: any) => {
-        console.log('page!!!', page);
+      {data?.pages?.map((page: any) => {
         return page?.items.map((item: any) => {
-          console.log('item!!!', item);
           return (
             <div className={styles.infinitePostContainer} key={item.post_id}>
               <Link
@@ -149,7 +132,10 @@ export default function PostsInfiniteScroll() {
         });
       })}
 
-      <div ref={loadMoreRef} style={{height: '20px', visibility: 'hidden'}}></div>
+      <div
+        ref={loadMoreRef}
+        style={{height: '100px', background: '#fff', visibility: 'hidden'}}
+      ></div>
     </div>
   );
 }

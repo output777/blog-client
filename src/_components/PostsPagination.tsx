@@ -7,6 +7,8 @@ import styles from './postPagination.module.css';
 import Image from 'next/image';
 import Pagination from './Pagination';
 import TextContent from './TextContent';
+import {useLoadingStore} from '@/app/_store/loadingStore';
+import {useEffect, useState} from 'react';
 
 interface FetchPostsProps {
   blogId: number | null;
@@ -68,18 +70,20 @@ async function getPosts({blogId, page, categoryId = ''}: FetchPostsProps) {
 }
 
 export default function PostsPagination({nickname}: PostsPaginationProps) {
+  const {setLoading} = useLoadingStore();
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = useParams();
   const {blogValue} = useBlogStore();
-  const categoryId = params.categoryid || '';
+  const [categoryId, setCategoryId] = useState('');
+  const [decodedNickname, setDecodedNickname] = useState('');
+  const [identification, setIdentification] = useState(false);
 
-  const decodedNickname = decodeURIComponent(params?.nickname as string);
-  const identification = decodedNickname === nickname;
+  console.log('blogValue', blogValue);
   console.log('identification', identification);
 
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
-  const {data, isLoading} = useQuery<DataProps>({
+  const {data, isFetching} = useQuery<DataProps>({
     queryKey: ['posts', currentPage],
     queryFn: async () => {
       const fetchData = {
@@ -89,30 +93,35 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
       };
       return await getPosts(fetchData);
     },
-    enabled: !!blogValue.blogId,
+    enabled: !!blogValue.blogId && !!decodedNickname && !!params,
   });
 
   const pageHandler = (page: string) => {
-    const isCategory = !!categoryId ? `/category/${categoryId}` : '';
-    router.push(`/blog/${decodedNickname}${isCategory}?page=${page}`);
+    router.push(`/blog/${decodedNickname}/category/${categoryId}?page=${page}`);
   };
 
   const totalPages = data?.pagination.totalPages as number;
 
-  console.log('data>>>>', data);
+  useEffect(() => {
+    setLoading(isFetching);
+  }, [setLoading, isFetching]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (params && nickname) {
+      setDecodedNickname(decodeURIComponent(params.nickname as string));
+      setIdentification(decodeURIComponent(params.nickname as string) === nickname);
+      setCategoryId(params?.categoryid as string);
+    }
+  }, [params, nickname]);
 
   return (
     <>
       {data?.posts.length === 0 ? (
         <div className={styles.container}>
           <p>
-            <span>{nickname}</span>님 포스팅이 없습니다.
+            <span>{decodedNickname}</span>님 포스팅이 없습니다.
           </p>
-          <Link href={`/blog/${nickname}/write`} className={styles.writeBtn}>
+          <Link href={`/blog/${decodedNickname}/write`} className={styles.writeBtn}>
             글쓰기
           </Link>
         </div>
@@ -123,7 +132,7 @@ export default function PostsPagination({nickname}: PostsPaginationProps) {
               .filter((post: PostProps) => identification || post.is_public === 'Y')
               .map((post: PostProps) => (
                 <Link
-                  href={`/blog/${nickname}/category/${post.category_id}/post/${post.post_id}`}
+                  href={`/blog/${decodedNickname}/category/${post.category_id}/post/${post.post_id}`}
                   key={post.post_id}
                   className={styles.post}
                 >

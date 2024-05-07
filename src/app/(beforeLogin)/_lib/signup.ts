@@ -13,6 +13,9 @@ export const onSubmitSignUp = async (prevState: any, formData: FormData) => {
   if (!formData.get('password') || !(formData.get('password') as string)?.trim()) {
     return {message: 'no_password'};
   }
+  if (formData.get('nickname')?.toString().slice(0, 1) === '@') {
+    return {message: 'Nickname cannot start with @'};
+  }
 
   let shouldRedirect = false;
   const signupData = {

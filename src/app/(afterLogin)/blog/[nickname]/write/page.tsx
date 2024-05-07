@@ -25,6 +25,7 @@ interface PostDataProps {
 export default function WritePage() {
   const session = useSession();
   const router = useRouter();
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   const {blogValue} = useBlogStore();
   const {categoryValue} = useCategoryStore();
   const [value, setValue] = useState({
@@ -59,6 +60,9 @@ export default function WritePage() {
     onSuccess: () => {
       router.push(`/blog/${session.data?.user?.name}`);
     },
+    onError: (err) => {
+      console.error('error: ', err);
+    },
   });
 
   const handleValue = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
@@ -69,6 +73,12 @@ export default function WritePage() {
   const handleImageFile = (e: ChangeEvent<HTMLInputElement>) => {
     const {files} = e.target;
     if (files && files.length > 0) {
+      const file = files[0];
+      if (file.size > MAX_FILE_SIZE) {
+        alert('2MB 이하의 이미지를 업로드하세요');
+        e.target.value = ''; // 입력 필드 초기화
+        return;
+      }
       setImageFile(files[0]);
     } else {
       setImageFile(null);
@@ -80,6 +90,17 @@ export default function WritePage() {
   };
 
   const handlePost = async () => {
+    if (value.title.trim() === '') {
+      return alert('제목을 입력하세요');
+    }
+    if (value.categoryId === '') {
+      return alert('카테고리를 선택하세요');
+    }
+    // 여기 띄어쓰기라도 입력하면 tag가 생기는데 이것도 막을지 고민중
+    if (editorValue === '') {
+      return alert('내용을 입력하세요');
+    }
+
     const postData = {
       title: value.title,
       categoryId: value.categoryId,
@@ -163,9 +184,6 @@ export default function WritePage() {
             </div>
           </div>
         </div>
-        {/* <div>
-          <Button label="게시하기" className={styles.btn} onClick={handlePost} />
-        </div> */}
       </div>
       <Editor value={editorValue} onChange={handleEditorValue} />
     </div>

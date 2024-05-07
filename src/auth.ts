@@ -32,7 +32,6 @@ export const {
             throw new Error('CredentialsSignin');
           }
           const user = await authResponse.json();
-          console.log('user', user);
           return {
             email: user.email,
             nickname: user.name,
