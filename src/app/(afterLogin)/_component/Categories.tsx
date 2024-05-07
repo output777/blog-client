@@ -150,6 +150,10 @@ export default function Categories({userEmail, nickname}: Props) {
   };
 
   const addCategorySaveHandler = () => {
+    if (addCategoryValue.trim() === '') {
+      return alert('카테고리 이름을 입력해주세요.');
+    }
+
     const categoryData = {
       email: userEmail,
       categoryName: addCategoryValue,
