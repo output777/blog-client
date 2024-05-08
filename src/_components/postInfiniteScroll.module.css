@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   grid-gap: 3rem;
   box-sizing: border-box;
@@ -52,45 +52,64 @@
   gap: 0.5rem;
 }
 
-.infinitePost .category {
+.category {
   font-size: 0.9rem;
   color: #909eb1;
   font-weight: bold;
 }
 
-.infinitePost .title {
-  font-size: 2rem;
+.title {
+  font-size: 1.3rem;
   color: #0a2855;
   font-weight: bold;
 }
 
-.infinitePost .content {
+.content {
   font-size: 1rem;
   flex: 1;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-.infinitePost .infoBox {
+.infoBox {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
 
-.infinitePost .info {
+.info {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.infinitePost .isPublic {
+.isPublic {
   color: #fff;
   background: #0a2855;
   padding: 0.5rem 1rem;
   border-radius: 10px;
 }
 
+@media (max-width: 1400px) {
+  .container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2.5rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+  }
+}
+
 @media (max-width: 700px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+  }
+
   .infinitePost {
     padding: 0.5rem;
   }
