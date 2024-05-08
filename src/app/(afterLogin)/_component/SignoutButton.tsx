@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import {signOut} from 'next-auth/react';
+import {getSession, signOut} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
 import styles from './signout.module.css';
 
@@ -13,7 +13,13 @@ export default function SignoutButton() {
       .then(
         async () =>
           await fetch('api/signout')
-            .then(() => router.replace('/'))
+            .then(async () => {
+              const session = await getSession();
+              console.log('session', session);
+              sessionStorage.clear();
+              localStorage.clear();
+              router.replace('/');
+            })
             .catch((err) => console.error(err))
       )
       .catch((err) => console.error(err));
