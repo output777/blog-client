@@ -31,6 +31,7 @@ export const {
             console.error('인증 실패:', await authResponse.text()); // 로그에 더 많은 정보를 출력할 수 있도록 수정
             throw new Error('CredentialsSignin');
           }
+
           const user = await authResponse.json();
           return {
             email: user.email,
@@ -70,12 +71,19 @@ export const {
       user.name = `${user.name} ${account?.provider}`;
       return true;
     },
-    session: async ({session}) => {
+    jwt: async ({token, user}) => {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    session: async ({session, token}) => {
       const currentProvider = session.user.name?.split(' ');
       session.user.name =
         currentProvider && currentProvider[1] === 'credentials'
           ? `${currentProvider[0]}`
           : `@${currentProvider?.[0]}`;
+      session.sessionToken = token.jti as string;
       return session;
     },
     redirect: async ({url, baseUrl}) => {
