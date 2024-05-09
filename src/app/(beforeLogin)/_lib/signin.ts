@@ -1,6 +1,7 @@
 'use server';
 
 import {signIn} from '@/auth';
+import {getSession} from 'next-auth/react';
 import {redirect} from 'next/navigation';
 
 export const onSubmitSignIn = async (prevState: any, formData: FormData) => {
@@ -18,7 +19,6 @@ export const onSubmitSignIn = async (prevState: any, formData: FormData) => {
       password: formData.get('password'),
       redirect: false,
     });
-
     shouldRedirect = true;
   } catch (err) {
     return {message: 'failed_signin'};
