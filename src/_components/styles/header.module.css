@@ -1,0 +1,97 @@
+.header {
+  position: relative;
+}
+
+.header_common {
+  box-sizing: content-box;
+  height: 54px;
+  background-color: #7b6d6d;
+  border-bottom: 1px solid #dbe1e5;
+  color: #fff;
+}
+
+.inner {
+  width: 1110px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.area_logo {
+}
+
+.logo_hiblog_logo {
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  gap: 10px;
+}
+
+.logo_hiblog_logo span {
+  color: #7b6d6d;
+  font-weight: 800;
+  background-color: #fff;
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.area_search {
+}
+
+.area_sign {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.area_sign_link {
+  width: 56px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dbe1e5;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.area_sign_link_profile {
+  min-width: 56px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.area_sign_link_profile strong {
+  font-weight: 600;
+  padding-right: 2px;
+}
+
+.area_sign_link_setting {
+  width: 56px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dbe1e5;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+/* .area_signin a {
+  width: 53px;
+  height: 23px;
+} */

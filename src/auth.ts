@@ -4,14 +4,10 @@ import GoogleProvider from 'next-auth/providers/google';
 
 export const {
   handlers: {GET, POST},
-  auth,
   signIn,
   signOut,
+  auth,
 } = NextAuth({
-  pages: {
-    signIn: '/signin',
-    newUser: '/signup',
-  },
   providers: [
     CredentialProvider({
       async authorize(credentials) {
@@ -44,7 +40,6 @@ export const {
       },
     }),
     GoogleProvider({
-      // Google 로그인 설정 추가
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
@@ -52,7 +47,7 @@ export const {
   callbacks: {
     signIn: async ({user, account}) => {
       if (account?.provider !== 'credentials') {
-        const signupData = {
+        const socialSignupData = {
           email: user.email,
           nickname: `@${user.name}`,
           password: null,
@@ -63,7 +58,7 @@ export const {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(signupData),
+          body: JSON.stringify(socialSignupData),
         });
 
         if (response.status === 500) return false;
@@ -79,15 +74,15 @@ export const {
     },
     session: async ({session, token}) => {
       const currentProvider = session.user.name?.split(' ');
+      session.sessionToken = token.jti as string;
       session.user.name =
         currentProvider && currentProvider[1] === 'credentials'
           ? `${currentProvider[0]}`
           : `@${currentProvider?.[0]}`;
-      session.sessionToken = token.jti as string;
       return session;
     },
-    redirect: async ({url, baseUrl}) => {
-      return baseUrl + '/blog';
+    redirect: async ({baseUrl}) => {
+      return baseUrl + '/';
     },
   },
   secret: process.env.AUTH_SECRET || 'any random string',

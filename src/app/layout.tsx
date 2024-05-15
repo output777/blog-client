@@ -3,9 +3,8 @@ import type {Metadata} from 'next';
 import {Noto_Sans_KR} from 'next/font/google';
 import './globals.css';
 import Head from 'next/head';
-import {QueryClientProviderWithClient} from '@/_components/QueryClientProviderWithClient';
+import QueryClientProviderWithClient from '@/_components/QueryClientProvider';
 import AuthSession from '@/_components/AuthSession';
-import Loading from '@/_components/Loading';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -30,7 +29,6 @@ export default function RootLayout({
         <body className={`${notoSansKR.className}`}>
           <QueryClientProviderWithClient>
             <AuthSession>
-              <Loading />
               <div>{children}</div>
             </AuthSession>
           </QueryClientProviderWithClient>
