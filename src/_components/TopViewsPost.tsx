@@ -1,13 +1,10 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import styles from './styles/topViews.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
-const DynamicContentComponent = dynamic(() => import('../_components/ContentComponent'), {
-  ssr: false,
-});
+import stripHtmlTags from '@/app/_lib/strip';
 
-// TODO thumbnail_author, post.image_url || '', {post.content} 태그지우기 수정,
+// TODO post.image_url || '' 수정,
 type TopViewsPostsProps = {topViewsPosts: any};
 export default function TopViewsPost({topViewsPosts}: TopViewsPostsProps) {
   return (
@@ -31,11 +28,7 @@ export default function TopViewsPost({topViewsPosts}: TopViewsPostsProps) {
                   <div className={styles.content_inner}>
                     <div className={styles.content}>
                       <span className={styles.nickname}>{post.nickname}</span>
-                      <p className={styles.text_post}>
-                        <Suspense fallback={<div></div>}>
-                          <DynamicContentComponent content={post.content} />
-                        </Suspense>
-                      </p>
+                      <p className={styles.text_post}>{stripHtmlTags(post.content)}</p>
                     </div>
                   </div>
                 </div>

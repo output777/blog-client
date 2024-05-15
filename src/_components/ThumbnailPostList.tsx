@@ -8,7 +8,7 @@ import {useSearchParams} from 'next/navigation';
 import Pagination from './Pagination';
 import {useQuery} from '@tanstack/react-query';
 import {timeAgo} from '@/app/_lib/time';
-import ContentComponent from './ContentComponent';
+import stripHtmlTags from '@/app/_lib/strip';
 
 interface ThumbnailPost {
   blog_id: number;
@@ -71,9 +71,7 @@ export default function ThumbnailPostList() {
                   <strong className={styles.title_post}>{post?.title}</strong>
                 </Link>
                 <Link href={`/blog/${post?.nickname}/post/${post?.post_id}`}>
-                  <p className={styles.text}>
-                    <ContentComponent content={post?.content} />
-                  </p>
+                  <p className={styles.text}>{stripHtmlTags(post?.content)}</p>
                 </Link>
               </div>
             </div>
