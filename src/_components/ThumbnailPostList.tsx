@@ -7,8 +7,27 @@ import Image from 'next/image';
 import {useSearchParams} from 'next/navigation';
 import Pagination from './Pagination';
 import {useQuery} from '@tanstack/react-query';
+import {timeAgo} from '@/app/_lib/time';
+import ContentComponent from './ContentComponent';
+
+interface ThumbnailPost {
+  blog_id: number;
+  category_id: number;
+  category_name: string;
+  content: string;
+  image_url: string;
+  is_public: string;
+  nickname: string;
+  post_id: number;
+  reg_tm: string;
+  title: string;
+  upd_tm: string;
+  user_id: number;
+  views: number;
+}
 
 // TODO content 태그 없애기
+// data paginaiton currentPage가 null인거 수정하기
 export default function ThumbnailPostList() {
   const params = useSearchParams();
   const [limitPage, setLimitPage] = useState(5);
@@ -38,21 +57,13 @@ export default function ThumbnailPostList() {
   return (
     <div className={styles.content}>
       <div className={styles.list_post_article}>
-        {data?.posts?.map((post: any, index: any) => (
+        {data?.posts?.map((post: ThumbnailPost, index: number) => (
           <div key={index} className={styles.item}>
             <div className={styles.info_post}>
               <Link href={`/blog/${post?.nickname}`}>
-                <div className={styles.thumbnail_author}>
-                  <Image
-                    src={post?.image_url || 'https://via.placeholder.com/240'}
-                    alt="thumbnail_author image"
-                    width={32}
-                    height={32}
-                  />
-                </div>
                 <div className={styles.info_author}>
-                  <em className={styles.info_author}>{post?.nickname}</em>
-                  <span className={styles.info_author}>{post?.reg_tm}</span>
+                  <em className={styles.name_author}>{post?.nickname}</em>
+                  <span className={styles.time}>{timeAgo(post?.reg_tm)}</span>
                 </div>
               </Link>
               <div className={styles.desc}>
@@ -60,7 +71,9 @@ export default function ThumbnailPostList() {
                   <strong className={styles.title_post}>{post?.title}</strong>
                 </Link>
                 <Link href={`/blog/${post?.nickname}/post/${post?.post_id}`}>
-                  <p className={styles.text}>{post?.content}</p>
+                  <p className={styles.text}>
+                    <ContentComponent content={post?.content} />
+                  </p>
                 </Link>
               </div>
             </div>

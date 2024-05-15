@@ -8,6 +8,8 @@ import {PostProps} from '@/app/blog/[nickname]/page';
 import {useQuery} from '@tanstack/react-query';
 import {useParams} from 'next/navigation';
 import {HiOutlineDotsVertical} from 'react-icons/hi';
+import ContentComponent from './ContentComponent';
+import {regFullTime} from '@/app/_lib/time';
 
 export default function BlogPostItem() {
   const params = useParams();
@@ -35,7 +37,7 @@ export default function BlogPostItem() {
           <div className={styles.posts_content_header_info_wrap}>
             <div className={styles.posts_content_header_profile}>
               <Link href={`/blog/${nickname}`}>{nickname}</Link>
-              <span>{postData?.reg_tm}</span>
+              <span>{regFullTime(postData?.reg_tm as string)}</span>
             </div>
             <div className={styles.posts_content_header_info_button_wrap}>
               <HiOutlineDotsVertical className={styles.posts_content_header_info_button} />
@@ -43,7 +45,9 @@ export default function BlogPostItem() {
           </div>
           <div className={styles.posts_content_header_border_bottom}></div>
         </div>
-        <div className={styles.posts_content_post_content}>{postData?.content}</div>
+        <div className={styles.posts_content_post_content}>
+          <ContentComponent content={postData?.content as string} />
+        </div>
       </div>
     </div>
   );

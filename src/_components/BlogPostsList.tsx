@@ -7,6 +7,7 @@ import {useQuery} from '@tanstack/react-query';
 import {BlogPostsProps, PostDataProps, PostProps} from '@/app/blog/[nickname]/page';
 import {usePostListPageStore} from '@/app/_store/postListPageStore';
 import {useParams} from 'next/navigation';
+import {regTime} from '@/app/_lib/time';
 
 export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
   const {postListPage, setPostListPage} = usePostListPageStore();
@@ -108,7 +109,7 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
                 >
                   {post?.title}
                 </Link>
-                <div>{post?.reg_tm}</div>
+                <div>{regTime(post?.reg_tm)}</div>
               </div>
             ))}
             <div className={styles.pagination}>

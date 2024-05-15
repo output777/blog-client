@@ -8,9 +8,18 @@ export default async function BlogHeader() {
   return (
     <div className={styles.header}>
       <div className={styles.header_menu}>
-        <Link href={`/blog/${session?.user?.name}`}>내블로그</Link>
         <Link href={`/`}>블로그 홈</Link>
-        <Link href={`/blog/${session?.user?.name}/setting`}>관리</Link>
+        {session ? (
+          <>
+            <Link href={`/blog/${session?.user?.name}`}>내블로그</Link>
+            <Link href={`/blog/${session?.user?.name}/setting`}>관리</Link>
+          </>
+        ) : (
+          <>
+            <Link href={`/signin`}>로그인</Link>
+            <Link href={`/signup`}>회원가입</Link>
+          </>
+        )}
       </div>
     </div>
   );
