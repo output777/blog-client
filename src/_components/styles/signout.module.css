@@ -1,0 +1,11 @@
+.area_signout_btn {
+  width: 56px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dbe1e5;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 600;
+}

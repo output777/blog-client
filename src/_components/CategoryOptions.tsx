@@ -1,12 +1,14 @@
 'use client';
-import {useCategoryStore} from '@/app/_store/categoryStore';
-import React, {useMemo} from 'react';
+
+import {useCategoryStore} from '@/store/categoryStore';
+import {useMemo} from 'react';
 
 export default function CategoryOptions() {
   const {categoryValue} = useCategoryStore();
 
   const options = useMemo(() => {
-    return categoryValue.map((category) => (
+    const validCategories = Array.isArray(categoryValue) ? categoryValue : [];
+    return validCategories?.map((category) => (
       <option key={category.id} value={category.id}>
         {category.name}
       </option>

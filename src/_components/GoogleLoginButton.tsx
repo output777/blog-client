@@ -1,19 +1,17 @@
+'use client';
+import Image from 'next/image';
 import React from 'react';
 import {signIn} from 'next-auth/react';
-import styles from './googleLoginButton.module.css';
-import Image from 'next/image';
+import styles from './styles/googleLoginButton.module.css';
 
 export default function GoogleLoginButton() {
-  const handleLogin = () => {
-    signIn('google', {callbackUrl: '/home'});
+  const googleLoginHandler = () => {
+    signIn('google', {callbackUrl: '/'});
   };
-
   return (
-    <div className={styles.socialLogin} onClick={handleLogin}>
-      <div className={styles.icon}>
-        <Image src="/images/menu-logos/google.svg" alt="google icon" width={30} height={30} />
-        <span>구글 로그인</span>
-      </div>
+    <div className={styles.google_login} onClick={googleLoginHandler}>
+      <Image src="/images/menu-logos/google.svg" alt="google icon" width={16} height={16} />
+      <span>구글로그인</span>
     </div>
   );
 }

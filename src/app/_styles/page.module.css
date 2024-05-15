@@ -1,0 +1,15 @@
+.container {
+  position: relative;
+  min-height: 100dvh;
+  min-width: 1110px;
+  min-height: 100%;
+  padding-bottom: 129px;
+}
+
+.layout_content {
+  width: 1110px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+}

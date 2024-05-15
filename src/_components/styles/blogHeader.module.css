@@ -1,0 +1,40 @@
+.header {
+  height: 33px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header_menu {
+  display: flex;
+  align-items: center;
+}
+
+.header_menu a {
+  padding: 20px 12px;
+  font-size: 12px;
+  line-height: 14px;
+  color: #000;
+  position: relative;
+}
+
+.header_menu a:first-child::after {
+  position: absolute;
+  top: 22px;
+  right: 0;
+  width: 1px;
+  height: 12px;
+  background: #dbdbdb;
+  content: '';
+}
+
+.header_menu a:nth-child(2)::after {
+  position: absolute;
+  top: 22px;
+  right: 0;
+  width: 1px;
+  height: 12px;
+  background: #dbdbdb;
+  content: '';
+}
