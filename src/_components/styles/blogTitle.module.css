@@ -10,7 +10,7 @@
   justify-content: space-between;
 }
 
-.blog_title div {
+.blog_title_line {
   width: 100%;
   max-width: 300px;
   height: 5px;

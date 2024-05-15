@@ -68,7 +68,6 @@
 .area_my_account {
   position: relative;
   height: 69px;
-  padding-left: 71px;
   background: #f7f9fa;
   border: solid #dbe1e5;
   border-width: 1px 1px 0;
@@ -76,7 +75,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding-right: 15px;
+  padding: 0 25px;
 }
 
 .name {

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import styles from './styles/topViews.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+const DynamicContentComponent = dynamic(() => import('../_components/ContentComponent'), {
+  ssr: false,
+});
 
 // TODO thumbnail_author, post.image_url || '', {post.content} 태그지우기 수정,
 type TopViewsPostsProps = {topViewsPosts: any};
@@ -26,16 +30,12 @@ export default function TopViewsPost({topViewsPosts}: TopViewsPostsProps) {
                   </div>
                   <div className={styles.content_inner}>
                     <div className={styles.content}>
-                      <div className={styles.thumbnail_author}>
-                        <Image
-                          src={post.image_url || 'https://via.placeholder.com/240'}
-                          alt="thumbnail_image"
-                          width={46}
-                          height={46}
-                        />
-                      </div>
                       <span className={styles.nickname}>{post.nickname}</span>
-                      <p className={styles.text_post}>{post.content}</p>
+                      <p className={styles.text_post}>
+                        <Suspense fallback={<div></div>}>
+                          <DynamicContentComponent content={post.content} />
+                        </Suspense>
+                      </p>
                     </div>
                   </div>
                 </div>

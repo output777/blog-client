@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import styles from '@/app/_styles/page.module.css';
 import Header from '@/_components/Header';
 import TopViews from '@/_components/TopViews';
-import ThumbnailPostList from '@/_components/ThumbnailPostList';
 import {auth} from '@/auth';
 import Aside from '@/_components/Aside';
+import dynamic from 'next/dynamic';
+const DynamicThumbnailPostList = dynamic(() => import('@/_components/ThumbnailPostList'));
 
 export default async function Page() {
   const session = await auth();
@@ -13,7 +14,9 @@ export default async function Page() {
       <Header session={session} />
       <TopViews />
       <div className={styles.layout_content}>
-        <ThumbnailPostList />
+        <Suspense fallback={<div></div>}>
+          <DynamicThumbnailPostList />
+        </Suspense>
         <Aside session={session} />
       </div>
     </div>

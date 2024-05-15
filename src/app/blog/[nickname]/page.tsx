@@ -1,10 +1,11 @@
-// 'use client';
 import React from 'react';
 import styles from '@/app/_styles/blog.module.css';
 import BlogHeader from '@/_components/BlogHeader';
-import BlogTitle from '@/_components/BlogTitle';
-import BlogCategory from '@/_components/BlogCategory';
-import BlogPosts from '@/_components/BlogPosts';
+import dynamic from 'next/dynamic';
+
+const DynamicBlogTitle = dynamic(() => import('@/_components/BlogTitle'), {ssr: false});
+const DynamicBlogCategory = dynamic(() => import('@/_components/BlogCategory'), {ssr: false});
+const DynamicBlogPosts = dynamic(() => import('@/_components/BlogPosts'), {ssr: false});
 
 export interface CategoryProps {
   id: number;
@@ -53,10 +54,10 @@ export default function BlogNicknamePage() {
     <div className={styles.blog_container}>
       <div className={styles.blog_wrap}>
         <BlogHeader />
-        <BlogTitle />
+        <DynamicBlogTitle />
         <div className={styles.blog_content}>
-          <BlogCategory />
-          <BlogPosts />
+          <DynamicBlogCategory />
+          <DynamicBlogPosts />
         </div>
       </div>
     </div>

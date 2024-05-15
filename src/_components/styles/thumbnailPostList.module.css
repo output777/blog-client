@@ -53,12 +53,15 @@
 .name_author {
   display: block;
   height: 16px;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   font-size: 14px;
   line-height: 16px;
 }
 
 .time {
+  font-size: 11px;
+  color: #959595;
+  line-height: 13px;
 }
 
 .desc {

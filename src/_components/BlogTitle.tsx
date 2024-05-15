@@ -5,7 +5,6 @@ import Link from 'next/link';
 import {useParams} from 'next/navigation';
 import {useQuery} from '@tanstack/react-query';
 import {useBlogStore} from '@/app/_store/blogStroe';
-import {useRouter} from 'next/navigation';
 import {useUrlParamsNicknameStore} from '@/app/_store/urlParamsNicknameStore';
 
 interface BlogDataProps {
@@ -49,7 +48,7 @@ export default function BlogTitle() {
   return (
     <Link href={`/blog/${nickname}`} className={styles.blog_title}>
       <span>{blogData?.blog?.title}</span>
-      <div></div>
+      <div className={styles.blog_title_line}></div>
     </Link>
   );
 }

@@ -7,6 +7,8 @@ import {BlogPostsProps, PostDataProps, PostProps} from '@/app/blog/[nickname]/pa
 import {GrFormNext, GrFormPrevious} from 'react-icons/gr';
 import {usePostDataPageStore} from '@/app/_store/postDataPageStore';
 import {HiOutlineDotsVertical} from 'react-icons/hi';
+import ContentComponent from './ContentComponent';
+import {regFullTime} from '@/app/_lib/time';
 
 export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
   const {postDataPage, setPostDataPage} = usePostDataPageStore();
@@ -69,7 +71,7 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
             <div className={styles.posts_content_header_info_wrap}>
               <div className={styles.posts_content_header_profile}>
                 <Link href={`/blog/${nickname}`}>{nickname}</Link>
-                <span>{post?.reg_tm}</span>
+                <span>{regFullTime(post?.reg_tm)}</span>
               </div>
               <div className={styles.posts_content_header_info_button_wrap}>
                 <HiOutlineDotsVertical className={styles.posts_content_header_info_button} />
@@ -77,7 +79,9 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
             </div>
             <div className={styles.posts_content_header_border_bottom}></div>
           </div>
-          <div className={styles.posts_content_post_content}>{post?.content}</div>
+          <div className={styles.posts_content_post_content}>
+            <ContentComponent content={post?.content} />
+          </div>
         </div>
       ))}
       {postsData?.pagination?.totalPosts === 0 ? null : (
