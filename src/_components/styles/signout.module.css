@@ -9,3 +9,10 @@
   line-height: 1.2;
   font-weight: 600;
 }
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  /* 작은 태블릿 스타일 */
+  .area_signout_btn {
+    font-size: 10px;
+  }
+}

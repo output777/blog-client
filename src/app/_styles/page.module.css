@@ -13,3 +13,44 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media only screen and (min-width: 769px) and (max-width: 1099px) {
+  /* 일반 태블릿 스타일 */
+  .container {
+    min-width: 769px;
+  }
+
+  .layout_content {
+    width: 769px;
+  }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  /* 작은 태블릿 스타일 */
+
+  .container {
+    min-width: 481px;
+  }
+
+  /* 일반 태블릿 스타일 */
+  .layout_content {
+    width: 481px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 모바일 스타일 */
+
+  .container {
+    width: 100%;
+    max-width: 480px;
+    min-width: 300px;
+  }
+
+  /* 일반 태블릿 스타일 */
+  .layout_content {
+    width: 100%;
+    max-width: 480px;
+    min-width: 300px;
+  }
+}

@@ -51,6 +51,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  font-size: 12px;
 }
 .area_sign_link {
   width: 56px;
@@ -59,7 +60,6 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #dbe1e5;
-  font-size: 12px;
   line-height: 1.2;
   font-weight: 600;
 }
@@ -70,7 +70,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
   line-height: 1.2;
 }
 
@@ -86,7 +85,6 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #dbe1e5;
-  font-size: 12px;
   line-height: 1.2;
   font-weight: 600;
 }
@@ -95,3 +93,55 @@
   width: 53px;
   height: 23px;
 } */
+
+.media {
+  display: none;
+}
+
+.mobile {
+  display: none;
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1099px) {
+  .inner {
+    width: 769px;
+  }
+
+  .media {
+    display: flex;
+  }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  /* 작은 태블릿 스타일 */
+  .inner {
+    width: 481px;
+  }
+
+  .media {
+    display: flex;
+  }
+
+  .area_sign {
+    gap: 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 모바일 스타일 */
+
+  .inner {
+    width: 100%;
+    max-width: 480px;
+    min-width: 300px;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+  .notMobile {
+    display: none;
+  }
+}

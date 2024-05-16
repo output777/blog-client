@@ -9,7 +9,7 @@ import SignoutButton from './SignoutButton';
 type SessionProps = {session: Session | null};
 export default function Aside({session}: SessionProps) {
   return (
-    <div className={styles.aside}>
+    <div className={`${styles.aside} ${styles.media}`}>
       <div className={styles.area_signin}>
         {session ? (
           <div className={styles.wrap_my_information}>

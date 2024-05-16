@@ -56,8 +56,6 @@ export default function UpdatePage() {
     enabled: !!postId,
   });
 
-  console.log('postData', postData);
-
   const updateMutation = useMutation({
     mutationFn: async (updateData: UpdateDataProps) => {
       const url = new URL('/api/update', window.location.origin);
