@@ -178,9 +178,44 @@
 
 .posts_content_header_info_button_wrap {
   cursor: pointer;
+  position: relative;
 }
 
 .posts_content_header_info_button {
+  width: 23px;
+  height: 30px;
+}
+
+.posts_content_header_info_button_menu {
+  width: 163px;
+  font-size: 14px;
+  border: 1px solid #d5d5d5;
+  position: absolute;
+  background-color: #fff;
+  top: 32px;
+  right: 0;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.posts_content_header_info_button_modify {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  color: #888;
+  padding: 0 13px;
+}
+
+.posts_content_header_info_button_delete {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #f2f2f2;
+  height: 48px;
+  color: #ff4646;
+  padding: 0 13px;
 }
 
 .posts_content_header_border_bottom {
