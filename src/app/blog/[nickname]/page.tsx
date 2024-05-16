@@ -31,6 +31,7 @@ export interface PostProps {
   category_name: string;
   content: string;
   image_url: string;
+  is_public: string;
   post_id: number;
   reg_tm: string;
   title: string;
