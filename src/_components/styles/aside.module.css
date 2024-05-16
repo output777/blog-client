@@ -114,3 +114,13 @@
 .menu_my_blog a:first-child {
   border-right: 1px solid #dbe1e5;
 }
+
+@media (max-width: 1099px) {
+  .inner {
+    width: 769px;
+  }
+
+  .media {
+    display: none;
+  }
+}

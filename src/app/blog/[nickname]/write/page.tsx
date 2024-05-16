@@ -43,6 +43,8 @@ export default function Writepage() {
     },
   });
 
+  console.log('categoryData', categoryData);
+
   const createMutation = useMutation({
     mutationFn: async (postData: PostDataProps) => {
       const formData = new FormData();
@@ -117,6 +119,13 @@ export default function Writepage() {
     };
     createMutation.mutate(postData);
   };
+
+  useEffect(() => {
+    if (!isFetching && categoryData?.categories.length === 0) {
+      alert('카테고리를 생성 후 글을 작성할 수 있습니다.');
+      router.push(`/blog/${session?.data?.user?.name}/setting`);
+    }
+  }, [isFetching, categoryData]);
 
   return (
     <div className={styles.blog_wrap}>

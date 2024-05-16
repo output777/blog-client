@@ -153,3 +153,196 @@
 .item:hover .desc_post {
   top: 0;
 }
+
+@media only screen and (min-width: 769px) and (max-width: 1099px) {
+  .top_views {
+    height: 250px;
+    padding: 20px 0 15px;
+  }
+
+  .inner {
+    width: 769px;
+  }
+
+  .list_topviews {
+    height: 167px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .item_wrap {
+    box-sizing: border-box;
+    width: 167px;
+    height: 167px;
+  }
+
+  .item {
+    position: relative;
+  }
+
+  .bg_image {
+    z-index: -1;
+    width: 167px;
+    height: 167px;
+    object-fit: cover;
+  }
+
+  .desc_post {
+    top: 92px;
+    padding: 0 18px 22px 18px;
+  }
+
+  .desc_post::before {
+    width: 167px;
+  }
+
+  .title_inner {
+    width: 120px;
+    font-size: 14px;
+  }
+
+  .content_inner {
+    position: relative;
+    width: 120px;
+    height: 44px;
+    margin: 17px auto;
+    font-size: 13px;
+  }
+
+  .nickname {
+    max-width: 140px;
+  }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  .top_views {
+    height: 520px;
+    padding: 20px 0 15px;
+  }
+
+  .inner {
+    width: 481px;
+  }
+
+  .list_topviews {
+    height: 460px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    grid-template-rows: auto auto;
+  }
+
+  .item_wrap {
+    box-sizing: border-box;
+    width: 220px;
+    height: 220px;
+  }
+
+  .item {
+    position: relative;
+  }
+
+  .bg_image {
+    z-index: -1;
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+  }
+
+  .desc_post {
+    top: 140px;
+    padding: 0 18px 22px 18px;
+  }
+
+  .desc_post::before {
+    width: 220px;
+  }
+
+  .title_inner {
+    width: 160px;
+    font-size: 14px;
+  }
+
+  .content_inner {
+    position: relative;
+    width: 160px;
+    height: 44px;
+    margin: 17px auto;
+    font-size: 13px;
+  }
+
+  .nickname {
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 모바일 스타일 */
+
+  .top_views {
+    height: 100%;
+    padding: 20px 0 15px;
+  }
+
+  .inner {
+    width: 100%;
+    max-width: 480px;
+    min-width: 300px;
+  }
+
+  .list_group {
+    overflow: hidden;
+  }
+
+  .list_topviews {
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 300px;
+    grid-template-rows: repeat(4, auto);
+    gap: 20px;
+    margin: 0 auto;
+  }
+
+  .item_wrap {
+    box-sizing: border-box;
+    width: 300px;
+    height: 220px;
+  }
+
+  .item {
+    position: relative;
+  }
+
+  .bg_image {
+    z-index: -1;
+    width: 300px;
+    height: 220px;
+    object-fit: cover;
+  }
+
+  .desc_post {
+    top: 140px;
+    padding: 0 18px 22px 18px;
+  }
+
+  .desc_post::before {
+    width: 300px;
+  }
+
+  .title_inner {
+    width: 160px;
+    font-size: 14px;
+  }
+
+  .content_inner {
+    position: relative;
+    width: 160px;
+    height: 44px;
+    margin: 17px auto;
+    font-size: 13px;
+  }
+
+  .nickname {
+    max-width: 160px;
+  }
+}

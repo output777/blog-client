@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.user_nickname {
+  font-size: 12px;
+}
+
+.user_nickname strong {
+  font-weight: 600;
+}
+
+.button_wrap {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.menu_wrap {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  width: 150px;
+  height: 100%;
+  z-index: 10;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  color: #666;
+  font-size: 12px;
+}
+
+.my_blog {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 10px 0;
+  border: 1px solid #dbe1e5;
+}
+
+.write {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 10px 0;
+  border: 1px solid #dbe1e5;
+  border-top: none;
+}
+
+.setting {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 10px 0;
+  border: 1px solid #dbe1e5;
+  border-top: none;
+}
+
+.signin {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 10px 0;
+}
+
+.signout {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 10px 0;
+}
+
+.none {
+  display: none;
+}

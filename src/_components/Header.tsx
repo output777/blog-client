@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './styles/header.module.css';
 import {Session} from 'next-auth';
 import SignoutButton from './SignoutButton';
+import MobileHeader from './MobileHeader';
 
 type SessionProps = {session: Session | null};
 export default function Header({session}: SessionProps) {
@@ -18,13 +19,22 @@ export default function Header({session}: SessionProps) {
                 </Link>
               </div>
             </div>
-            <div className={styles.area_sign}>
+            <div className={`${styles.mobile}`}>
+              <MobileHeader />
+            </div>
+            <div className={`${styles.area_sign} ${styles.notMobile}`}>
               {session ? (
                 <>
                   <div className={styles.area_sign_link_profile}>
                     <Link href={`/blog/${session?.user?.name}`}>
                       <strong>{session?.user?.name}</strong>님
                     </Link>
+                  </div>
+                  <div className={`${styles.area_sign_link_setting} ${styles.media}`}>
+                    <Link href={`/blog/${session?.user?.name}`}>내블로그</Link>
+                  </div>
+                  <div className={`${styles.area_sign_link_setting} ${styles.media}`}>
+                    <Link href={`/blog/${session?.user?.name}/write`}>글쓰기</Link>
                   </div>
                   <div className={styles.area_sign_link_setting}>
                     <Link href={`/blog/${session?.user?.name}/setting`}>관리</Link>

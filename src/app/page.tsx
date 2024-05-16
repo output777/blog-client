@@ -5,7 +5,10 @@ import TopViews from '@/_components/TopViews';
 import {auth} from '@/auth';
 import Aside from '@/_components/Aside';
 import dynamic from 'next/dynamic';
-const DynamicThumbnailPostList = dynamic(() => import('@/_components/ThumbnailPostList'));
+const DynamicThumbnailPostList = dynamic(() => import('@/_components/ThumbnailPostList'), {
+  ssr: false,
+  loading: () => <div></div>,
+});
 
 export default async function Page() {
   const session = await auth();

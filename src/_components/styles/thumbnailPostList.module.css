@@ -116,3 +116,106 @@
   height: 167px;
   object-fit: cover;
 }
+
+@media only screen and (min-width: 769px) and (max-width: 1099px) {
+  .content {
+    width: 769px;
+  }
+
+  .title_post {
+    width: 500px;
+    font-size: 16px;
+  }
+
+  .text {
+    width: 500px;
+  }
+
+  .thumbnail_post {
+    width: 150px;
+    height: 150px;
+  }
+
+  .thumbnail_post_image {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  /* 작은 태블릿 스타일 */
+
+  .content {
+    width: 481px;
+  }
+
+  .item {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .title_post {
+    width: 400px;
+    font-size: 14px;
+  }
+
+  .text {
+    width: 400px;
+  }
+
+  .info_post {
+    padding-top: 30px;
+  }
+
+  .thumbnail_post {
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+  }
+
+  .thumbnail_post_image {
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 모바일 스타일 */
+
+  .content {
+    width: 100%;
+    max-width: 480px;
+    min-width: 300px;
+  }
+
+  .item {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .title_post {
+    width: 300px;
+    font-size: 14px;
+  }
+
+  .text {
+    width: 300px;
+  }
+
+  .info_post {
+    padding-top: 30px;
+  }
+
+  .thumbnail_post {
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+  }
+
+  .thumbnail_post_image {
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+  }
+}
