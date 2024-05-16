@@ -26,7 +26,6 @@ export default function BlogPostItem() {
       url.searchParams.append('postId', postId);
 
       const response = await fetch(url.toString(), {method: 'DELETE'});
-      console.log('response', response);
       return await response.json();
     },
     onSuccess: () => {

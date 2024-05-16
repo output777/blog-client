@@ -26,7 +26,6 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
       url.searchParams.append('postId', postId);
 
       const response = await fetch(url.toString(), {method: 'DELETE'});
-      console.log('response', response);
       return await response.json();
     },
     onSuccess: () => {
@@ -36,7 +35,7 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
   });
 
   const {data: postsData, isFetching: isFetchingPostsData} = useQuery<PostDataProps>({
-    queryKey: ['posts', postDataPage, categoryId],
+    queryKey: ['posts', postDataPage, categoryId, nickname],
     queryFn: async () => {
       const url = new URL('/api/getposts', window.location.origin);
       url.searchParams.append('nickname', nickname);
@@ -48,8 +47,6 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
     },
     enabled: !!nickname,
   });
-
-  console.log('postsData', postsData);
 
   const pageArr = useMemo(() => {
     const lastPage =

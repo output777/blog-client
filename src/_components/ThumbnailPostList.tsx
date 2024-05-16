@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './styles/thumbnailPostList.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,6 +9,7 @@ import Pagination from './Pagination';
 import {useQuery} from '@tanstack/react-query';
 import {timeAgo} from '@/app/_lib/time';
 import stripHtmlTags from '@/app/_lib/strip';
+import {useCategoryIdStore} from '@/app/_store/categoryIdStore';
 
 interface ThumbnailPost {
   blog_id: number;
@@ -30,6 +31,7 @@ interface ThumbnailPost {
 // data paginaiton currentPage가 null인거 수정하기
 export default function ThumbnailPostList() {
   const params = useSearchParams();
+  const {setCategoryId} = useCategoryIdStore();
   const [limitPage, setLimitPage] = useState(5);
   const [startPage, setStartPage] = useState(1);
 
@@ -53,6 +55,10 @@ export default function ThumbnailPostList() {
       }
     },
   });
+
+  useEffect(() => {
+    setCategoryId('');
+  }, []);
 
   return (
     <div className={styles.content}>
