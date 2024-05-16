@@ -18,7 +18,7 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
   const postId = params.postid;
 
   const {data: postListData, isFetching: isFetchingpostListData} = useQuery<PostDataProps>({
-    queryKey: ['postList', postListPage, categoryId],
+    queryKey: ['postList', postListPage, categoryId, nickname],
     queryFn: async () => {
       const url = new URL('/api/getposts', window.location.origin);
       url.searchParams.append('nickname', nickname);
@@ -80,7 +80,9 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
         <div className={styles.post_list_wrap}>
           <div className={styles.post_list_category_header}>
             <h4 className={styles.post_list_category_title}>
-              <strong onClick={onClickCategoryMoreHandler}>전체보기</strong>{' '}
+              <strong onClick={onClickCategoryMoreHandler}>
+                {categoryId === '' ? '전체보기' : postListData?.posts[0].category_name}
+              </strong>{' '}
               {postListData?.pagination?.totalPosts}개의 글
             </h4>
             <div className={styles.post_list_category_more} onClick={onClickCategoryMoreHandler}>

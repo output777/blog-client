@@ -1,7 +1,6 @@
 export async function DELETE(request: Request) {
   const url = new URL(request.url);
   const postId = url.searchParams.get('postId');
-  console.log('postId', postId);
 
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/post/${postId}`, {
