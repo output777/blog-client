@@ -118,6 +118,29 @@
   justify-content: center;
 }
 
+.imageBox div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.imageBox div span {
+  word-wrap: break-word;
+}
+
+.imageBox button {
+  background-color: #7b6d6d;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 12px;
+  width: 100px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #dbe1e5;
+}
+
 .imageBox input {
   border-bottom: 1px solid #dbdbdb;
   outline: none;

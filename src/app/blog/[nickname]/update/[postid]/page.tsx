@@ -1,27 +1,26 @@
 'use client';
-import {useMutation, useQuery} from '@tanstack/react-query';
+import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {useSession} from 'next-auth/react';
-import {useRouter} from 'next/navigation';
-import styles from '@/app/_styles/write.module.css';
-import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
-import Link from 'next/link';
+import {useMutation, useQuery} from '@tanstack/react-query';
+import {useParams, useRouter} from 'next/navigation';
+import {CategoryProps, PostProps} from '../../page';
 import Editor from '@/_components/Editor';
+import styles from '@/app/_styles/write.module.css';
+import Link from 'next/link';
 
-interface PostDataProps {
+interface UpdateDataProps {
   title: string;
   categoryId: string;
   public: string;
-  image: File | null;
+  image: File | string;
   value: string;
   nickname: string;
 }
 
-interface CategoryProps {
-  id: number;
-  name: string;
-}
-export default function Writepage() {
+export default function UpdatePage() {
   const session = useSession();
+  const params = useParams();
+  const postId = params.postid;
   const router = useRouter();
   const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   const [value, setValue] = useState({
@@ -30,7 +29,9 @@ export default function Writepage() {
     public: 'N',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState('선택된 파일이 없습니다');
   const [editorValue, setEditorValue] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {data: categoryData, isFetching} = useQuery({
     queryKey: ['categories', session?.data?.user?.name],
@@ -43,38 +44,55 @@ export default function Writepage() {
     },
   });
 
-  const createMutation = useMutation({
-    mutationFn: async (postData: PostDataProps) => {
+  const {data: postData, isFetching: isFetchingPostData} = useQuery<PostProps>({
+    queryKey: ['posts', postId],
+    queryFn: async () => {
+      const url = new URL('/api/getpost', window.location.origin);
+      url.searchParams.append('postId', postId as string);
+
+      const response = await fetch(url.toString());
+      return await response.json();
+    },
+    enabled: !!postId,
+  });
+
+  console.log('postData', postData);
+
+  const updateMutation = useMutation({
+    mutationFn: async (updateData: UpdateDataProps) => {
+      const url = new URL('/api/update', window.location.origin);
+      url.searchParams.append('postId', postId as string);
       const formData = new FormData();
+      formData.append('title', updateData.title);
+      formData.append('categoryId', updateData.categoryId);
+      formData.append('value', updateData.value);
+      formData.append('is_public', updateData.public);
+      formData.append('nickname', updateData.nickname);
 
-      formData.append('title', postData.title);
-      formData.append('categoryId', postData.categoryId);
-      formData.append('value', postData.value);
-      formData.append('is_public', postData.public);
-      formData.append('nickname', postData.nickname);
-
-      if (postData.image) {
-        formData.append('image', postData.image);
+      if (updateData.image instanceof File) {
+        formData.append('image', updateData.image);
       }
-
-      const response = await fetch('/api/publish', {
-        method: 'POST',
+      const response = await fetch(url.toString(), {
+        method: 'PUT',
         body: formData,
       });
       return await response.json();
     },
     onSuccess: () => {
-      router.push(`/blog/${session.data?.user?.name}`);
+      router.back();
     },
   });
 
-  const handleValue = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
-      const {value} = e.target;
-      setValue((prev) => ({...prev, [field]: value}));
-    },
-    []
-  );
+  const handleFileInputClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleValue = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
+    const {value} = e.target;
+    setValue((prev) => ({...prev, [field]: value}));
+  };
 
   const handleImageFile = (e: ChangeEvent<HTMLInputElement>) => {
     const {files} = e.target;
@@ -86,8 +104,10 @@ export default function Writepage() {
         return;
       }
       setImageFile(files[0]);
+      setFileName(files[0].name);
     } else {
       setImageFile(null);
+      setFileName('선택한 파일이 없습니다');
     }
   };
 
@@ -95,7 +115,7 @@ export default function Writepage() {
     setEditorValue(value);
   };
 
-  const handlePost = async () => {
+  const handleUpdate = async () => {
     if (value.title.trim() === '') {
       return alert('제목을 입력하세요');
     }
@@ -107,16 +127,29 @@ export default function Writepage() {
       return alert('내용을 입력하세요');
     }
 
-    const postData = {
+    const updateData = {
       title: value.title,
       categoryId: value.categoryId,
       public: value.public,
-      image: imageFile,
+      image: imageFile || (postData?.image_url as string),
       value: editorValue,
       nickname: session?.data?.user?.name as string,
     };
-    createMutation.mutate(postData);
+    updateMutation.mutate(updateData);
   };
+
+  useEffect(() => {
+    if (!isFetchingPostData && postData) {
+      setValue((prev) => ({
+        ...prev,
+        title: postData.title,
+        categoryId: postData.category_id.toString(),
+        public: postData.is_public,
+      }));
+      setEditorValue(postData.content);
+      setFileName(postData.image_url);
+    }
+  }, [isFetchingPostData, postData]);
 
   return (
     <div className={styles.blog_wrap}>
@@ -127,7 +160,7 @@ export default function Writepage() {
           </Link>
         </div>
         <div className={styles.header_menu}>
-          <button className={styles.publish_btn} onClick={handlePost}>
+          <button className={styles.publish_btn} onClick={handleUpdate}>
             발행
           </button>
         </div>
@@ -162,13 +195,19 @@ export default function Writepage() {
         </div>
         <div className={styles.imageBox}>
           <label htmlFor={'image'}>썸네일</label>
-          <input
-            id={'image'}
-            name={'image'}
-            type={'file'}
-            onChange={handleImageFile}
-            accept={'image/png, image/jpeg'}
-          />
+          <div>
+            <button onClick={handleFileInputClick}>파일 선택</button>
+            <input
+              type="file"
+              id={'image'}
+              name={'image'}
+              ref={fileInputRef}
+              accept={'image/png, image/jpeg'}
+              style={{display: 'none'}}
+              onChange={handleImageFile}
+            />
+            <span>{fileName}</span>
+          </div>
         </div>
         <div className={styles.radioBox}>
           <label className={styles.radioContainerTitle}>노출</label>
