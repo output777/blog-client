@@ -2,18 +2,38 @@
 import Link from 'next/link';
 import React, {MouseEvent, useEffect, useMemo, useState} from 'react';
 import styles from './styles/blogPosts.module.css';
-import {useQuery} from '@tanstack/react-query';
+import {InvalidateQueryFilters, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {BlogPostsProps, PostDataProps, PostProps} from '@/app/blog/[nickname]/page';
 import {GrFormNext, GrFormPrevious} from 'react-icons/gr';
 import {usePostDataPageStore} from '@/app/_store/postDataPageStore';
 import {HiOutlineDotsVertical} from 'react-icons/hi';
+import {SlPencil} from 'react-icons/sl';
+import {BsTrash3} from 'react-icons/bs';
 import ContentComponent from './ContentComponent';
 import {regFullTime} from '@/app/_lib/time';
 
+// TODO 현재 페이지에 있는 postsData가 0인 경우 처리하기
 export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
+  const queryClient = useQueryClient();
   const {postDataPage, setPostDataPage} = usePostDataPageStore();
   const [limitPage, setLimitPage] = useState(10);
   const [startPage, setStartPage] = useState(1);
+  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
+
+  const deleteMutation = useMutation({
+    mutationFn: async (postId: string) => {
+      const url = new URL('/api/deletepost', window.location.origin);
+      url.searchParams.append('postId', postId);
+
+      const response = await fetch(url.toString(), {method: 'DELETE'});
+      console.log('response', response);
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['posts'] as InvalidateQueryFilters);
+      queryClient.invalidateQueries(['postList'] as InvalidateQueryFilters);
+    },
+  });
 
   const {data: postsData, isFetching: isFetchingPostsData} = useQuery<PostDataProps>({
     queryKey: ['posts', postDataPage, categoryId],
@@ -28,6 +48,8 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
     },
     enabled: !!nickname,
   });
+
+  console.log('postsData', postsData);
 
   const pageArr = useMemo(() => {
     const lastPage =
@@ -50,6 +72,32 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
     setPostDataPage(parseInt(value));
   };
 
+  const infoButtonhandler = (postId: number) => {
+    if (selectedPostId === postId) {
+      setSelectedPostId(null);
+    } else {
+      setSelectedPostId(postId);
+    }
+  };
+
+  const handleClickOutside = (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (target.id === 'delete_button') {
+      return;
+    }
+    if (target.id !== 'info_button') {
+      setSelectedPostId(null);
+    }
+  };
+
+  async function deletHandler(postId: string | number) {
+    try {
+      await deleteMutation.mutate(postId as string);
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  }
+
   useEffect(() => {
     if (!isFetchingPostsData && postsData) {
       setPostDataPage(postsData?.pagination?.currentPage);
@@ -60,6 +108,14 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
       }
     }
   }, [postsData, isFetchingPostsData, limitPage, setPostDataPage]);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -74,7 +130,33 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
                 <span>{regFullTime(post?.reg_tm)}</span>
               </div>
               <div className={styles.posts_content_header_info_button_wrap}>
-                <HiOutlineDotsVertical className={styles.posts_content_header_info_button} />
+                <HiOutlineDotsVertical
+                  className={styles.posts_content_header_info_button}
+                  onClick={() => infoButtonhandler(post?.post_id)}
+                  id="info_button"
+                />
+                <div
+                  className={`${styles.posts_content_header_info_button_menu} ${
+                    selectedPostId !== post?.post_id ? styles.none : ''
+                  }`}
+                >
+                  <Link
+                    href={`/blog/${nickname}/update/${post?.post_id}`}
+                    className={styles.posts_content_header_info_button_modify}
+                    id="modify_button"
+                  >
+                    <span>수정하기</span>
+                    <SlPencil />
+                  </Link>
+                  <div
+                    className={styles.posts_content_header_info_button_delete}
+                    id="delete_button"
+                    onClick={() => deletHandler(post?.post_id)}
+                  >
+                    <span>삭제하기</span>
+                    <BsTrash3 />
+                  </div>
+                </div>
               </div>
             </div>
             <div className={styles.posts_content_header_border_bottom}></div>

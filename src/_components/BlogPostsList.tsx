@@ -18,7 +18,7 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
   const postId = params.postid;
 
   const {data: postListData, isFetching: isFetchingpostListData} = useQuery<PostDataProps>({
-    queryKey: ['posts', postListPage, categoryId],
+    queryKey: ['postList', postListPage, categoryId],
     queryFn: async () => {
       const url = new URL('/api/getposts', window.location.origin);
       url.searchParams.append('nickname', nickname);
