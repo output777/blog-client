@@ -9,7 +9,8 @@
 
 .blog_wrap {
   height: 100%;
-  width: 982px;
+  width: 100%;
+  max-width: 982px;
   display: flex;
   flex-direction: column;
 }
@@ -25,4 +26,18 @@
 
 .rotate {
   transform: rotate(-180deg);
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1099px) {
+  .blog_content {
+    padding: 0 20px;
+  }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  /* 작은 태블릿 스타일 */
+}
+
+@media (max-width: 480px) {
+  /* 모바일 스타일 */
 }

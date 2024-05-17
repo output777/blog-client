@@ -7,6 +7,11 @@ export default async function BlogHeader() {
   const session = await auth();
   return (
     <div className={styles.header}>
+      <div className={styles.area_logo}>
+        <Link href="/" className={styles.logo_hiblog_logo}>
+          <span>H</span> blog
+        </Link>
+      </div>
       <div className={styles.header_menu}>
         <Link href={`/`}>블로그 홈</Link>
         {session ? (

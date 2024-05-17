@@ -3,7 +3,36 @@
   font-size: 12px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+
+.area_logo {
+}
+
+.logo_hiblog_logo {
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  gap: 10px;
+  color: #7b6d6d;
+  padding-left: 12px;
+}
+
+.logo_hiblog_logo span {
+  color: #fff;
+  font-weight: 800;
+  background-color: #7b6d6d;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blog_name {
 }
 
 .header_menu {

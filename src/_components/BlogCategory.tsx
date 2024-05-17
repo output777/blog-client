@@ -1,5 +1,5 @@
 'use client';
-import React, {MouseEvent, useState} from 'react';
+import React, {MouseEvent, useEffect, useState} from 'react';
 import styles from './styles/blogCategory.module.css';
 import {useBlogStore} from '@/app/_store/blogStroe';
 import {useUrlParamsNicknameStore} from '@/app/_store/urlParamsNicknameStore';
@@ -10,6 +10,11 @@ import {useCategoryIdStore} from '@/app/_store/categoryIdStore';
 import {usePostDataPageStore} from '@/app/_store/postDataPageStore';
 import {usePostListPageStore} from '@/app/_store/postListPageStore';
 import Link from 'next/link';
+import {useSession} from 'next-auth/react';
+import {SlPencil} from 'react-icons/sl';
+import {IoSettingsOutline} from 'react-icons/io5';
+import {RxCross2} from 'react-icons/rx';
+import {useMobileCategoryStore} from '@/app/_store/mobileCategoryStore';
 
 interface CategoryProps {
   id: number;
@@ -23,12 +28,14 @@ interface CategoryDataProps {
 }
 
 export default function BlogCategory() {
+  const session = useSession();
   const {blogTitle} = useBlogStore();
   const {nickname} = useUrlParamsNicknameStore();
   const {setPostDataPage} = usePostDataPageStore();
   const {setPostListPage} = usePostListPageStore();
   const {categoryId, setCategoryId} = useCategoryIdStore();
   const [moreActive, setMoreActive] = useState(false);
+  const {mobileCategoryActive, setMobileCategoryActive} = useMobileCategoryStore();
 
   const {data: categoryData, isFetching: isFetchingCategoryData} = useQuery<CategoryDataProps>({
     queryKey: ['categories', nickname],
@@ -53,56 +60,80 @@ export default function BlogCategory() {
     setMoreActive((prev) => !prev);
   };
 
+  const onClickMobileCategoryActiveCloseHandler = () => {
+    setMobileCategoryActive(false);
+  };
+
+  useEffect(() => {
+    setMobileCategoryActive(false);
+  }, []);
+
   return (
-    <div className={styles.side_content}>
-      <div className={styles.profile_wrap}>
-        <span className={styles.profile_title}>{blogTitle}</span>
-        <span className={styles.profile_nickname}>{nickname}</span>
-      </div>
-      <div className={styles.category_wrap}>
-        <div className={styles.category_header}>
-          <h3 className={styles.category_title}>카테고리</h3>
-          <div
-            className={`${styles.category_more} ${moreActive ? styles.rotate : ''}`}
-            onClick={onClickMoreHandler}
-          >
-            <MdOutlineArrowDropUp />
+    <>
+      <div className={`${styles.side_content} ${mobileCategoryActive ? styles.show : ''}`}>
+        <div
+          className={`${styles.mobile_category_open}`}
+          onClick={onClickMobileCategoryActiveCloseHandler}
+        >
+          <span>카테고리</span> <RxCross2 />
+        </div>
+        <div className={styles.profile_wrap}>
+          <span className={styles.profile_title}>{blogTitle}</span>
+          <span className={styles.profile_nickname}>{nickname}</span>
+          <div className={styles.profile_menu}>
+            <Link href={`/blog/${nickname}/write`}>
+              <SlPencil /> <span>글쓰기</span>
+            </Link>
+            <Link href={`/blog/${nickname}/setting`}>
+              <IoSettingsOutline /> <span>관리</span>
+            </Link>
           </div>
         </div>
-        <div className={styles.category_line}></div>
-        <ul className={`${styles.categories} ${moreActive ? styles.none : ''}`}>
-          <li className={styles.all_view}>
-            <TbNotes />
-            <Link href={`/blog/${nickname}`}>
-              <button
-                value={''}
-                onClick={selectCategoryHandler}
-                className={`${styles.all_view_button} ${categoryId === '' ? styles.active : ''}`}
-              >
-                전체보기
-              </button>
-            </Link>
-            <span>({categoryData?.totalPosts})</span>
-          </li>
-          {categoryData?.categories?.map((category: CategoryProps) => (
-            <li key={category.id} className={styles.category}>
+        <div className={styles.category_wrap}>
+          <div className={styles.category_header}>
+            <h3 className={styles.category_title}>카테고리</h3>
+            <div
+              className={`${styles.category_more} ${moreActive ? styles.rotate : ''}`}
+              onClick={onClickMoreHandler}
+            >
+              <MdOutlineArrowDropUp />
+            </div>
+          </div>
+          <div className={styles.category_line}></div>
+          <ul className={`${styles.categories} ${moreActive ? styles.none : ''}`}>
+            <li className={styles.all_view}>
               <TbNotes />
-              <Link href={`/blog/${nickname}`}>
+              <Link href={`/blog/${nickname}`} onClick={onClickMobileCategoryActiveCloseHandler}>
                 <button
+                  value={''}
                   onClick={selectCategoryHandler}
-                  value={category.id}
-                  className={`${styles.category_button} ${
-                    category.id === Number(categoryId) ? styles.active : ''
-                  }`}
+                  className={`${styles.all_view_button} ${categoryId === '' ? styles.active : ''}`}
                 >
-                  {category.name}
+                  전체보기
                 </button>
               </Link>
-              <span>({category.postCount})</span>
+              <span>({categoryData?.totalPosts})</span>
             </li>
-          ))}
-        </ul>
+            {categoryData?.categories?.map((category: CategoryProps) => (
+              <li key={category.id} className={styles.category}>
+                <TbNotes />
+                <Link href={`/blog/${nickname}`} onClick={onClickMobileCategoryActiveCloseHandler}>
+                  <button
+                    onClick={selectCategoryHandler}
+                    value={category.id}
+                    className={`${styles.category_button} ${
+                      category.id === Number(categoryId) ? styles.active : ''
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                </Link>
+                <span>({category.postCount})</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
