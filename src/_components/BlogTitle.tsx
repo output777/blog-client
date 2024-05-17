@@ -46,7 +46,7 @@ export default function BlogTitle() {
   }, [blogData, isFetchingBlogData, setBlogTitle]);
 
   return (
-    <Link href={`/blog/${nickname}`} className={styles.blog_title}>
+    <Link href={`/blog/${nickname}`} className={`${styles.blog_title} ${styles.none}`}>
       <span>{blogData?.blog?.title}</span>
       <div className={styles.blog_title_line}></div>
     </Link>

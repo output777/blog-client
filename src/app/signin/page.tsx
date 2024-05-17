@@ -25,6 +25,8 @@ function showMessage(message: string) {
 export default function SigninPage() {
   const [state, formAction] = useFormState(onSubmitSignIn, {message: ''});
   const {pending} = useFormStatus();
+
+  console.log('pending', pending);
   const idRef = useRef<HTMLInputElement>(null);
   const pwRef = useRef<HTMLInputElement>(null);
   const [idActive, setIdActive] = useState(false);

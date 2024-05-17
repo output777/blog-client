@@ -18,3 +18,23 @@
   display: flex;
   gap: 10px;
 }
+
+@media only screen and (min-width: 769px) and (max-width: 1099px) {
+  .blog_wrap {
+    width: 769px;
+  }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  /* 작은 태블릿 스타일 */
+  .blog_wrap {
+    width: 481px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 모바일 스타일 */
+  .blog_wrap {
+    width: 300px;
+  }
+}

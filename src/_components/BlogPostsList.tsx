@@ -8,12 +8,15 @@ import {BlogPostsProps, PostDataProps, PostProps} from '@/app/blog/[nickname]/pa
 import {usePostListPageStore} from '@/app/_store/postListPageStore';
 import {useParams} from 'next/navigation';
 import {regTime} from '@/app/_lib/time';
+import {IoIosArrowDown} from 'react-icons/io';
+import {useMobileCategoryStore} from '@/app/_store/mobileCategoryStore';
 
 export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
   const {postListPage, setPostListPage} = usePostListPageStore();
   const [postListLimitPage, setPostListLimitPage] = useState(10);
   const [postListStartPage, setPostListStartPage] = useState(1);
   const [categoryMoreActive, setCategoryMoreActive] = useState(false);
+  const {mobileCategoryActive, setMobileCategoryActive} = useMobileCategoryStore();
   const params = useParams();
   const postId = params.postid;
 
@@ -59,6 +62,10 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
     setPostListPage(postListPage + 1);
   };
 
+  const onClickMobileCategoryActiveHandler = () => {
+    setMobileCategoryActive(true);
+  };
+
   useEffect(() => {
     if (!isFetchingpostListData && postListData) {
       setPostListPage(postListData?.pagination?.currentPage);
@@ -72,6 +79,12 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
 
   return (
     <>
+      <div
+        className={`${styles.mobile_category_open}`}
+        onClick={onClickMobileCategoryActiveHandler}
+      >
+        <span>카테고리</span> <IoIosArrowDown />
+      </div>
       {postListData?.pagination?.totalPosts === 0 ? (
         <div className={styles.no_post_content}>
           <div className={styles.no_post}>아직 작성된 글이 없습니다.</div>
