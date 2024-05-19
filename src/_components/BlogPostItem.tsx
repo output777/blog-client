@@ -84,7 +84,8 @@ export default function BlogPostItem() {
           <div className={styles.posts_content_header_info_wrap}>
             <div className={styles.posts_content_header_profile}>
               <Link href={`/blog/${nickname}`}>{nickname}</Link>
-              <span>{regFullTime(postData?.reg_tm as string)}</span>
+              <span>{postData?.reg_tm as string}</span>
+              {/* <span>{regFullTime(postData?.reg_tm as string)}</span> */}
             </div>
             <div className={styles.posts_content_header_info_button_wrap}>
               <HiOutlineDotsVertical

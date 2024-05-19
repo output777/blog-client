@@ -124,7 +124,8 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
                 >
                   {post?.title}
                 </Link>
-                <div>{regTime(post?.reg_tm)}</div>
+                <div>{post?.reg_tm}</div>
+                {/* <div>{regTime(post?.reg_tm)}</div> */}
               </div>
             ))}
             <div className={styles.pagination}>

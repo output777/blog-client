@@ -69,7 +69,8 @@ export default function ThumbnailPostList() {
               <Link href={`/blog/${post?.nickname}`}>
                 <div className={styles.info_author}>
                   <em className={styles.name_author}>{post?.nickname}</em>
-                  <span className={styles.time}>{timeAgo(post?.reg_tm)}</span>
+                  {/* <span className={styles.time}>{timeAgo(post?.reg_tm)}</span> */}
+                  <span className={styles.time}>{post?.reg_tm}</span>
                 </div>
               </Link>
               <div className={styles.desc}>
