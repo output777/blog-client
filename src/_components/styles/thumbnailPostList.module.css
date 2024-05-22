@@ -2,6 +2,12 @@
   width: 770px;
 }
 
+.no_posts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
 .list_post_article {
   box-sizing: border-box;
 }

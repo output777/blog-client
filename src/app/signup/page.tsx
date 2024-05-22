@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import React, {useRef, useState} from 'react';
-import {useFormState} from 'react-dom';
+import React, {useEffect, useRef, useState} from 'react';
+import {useFormState, useFormStatus} from 'react-dom';
 import styles from '@/app/_styles/signup.module.css';
 import {onSubmitSignUp} from '../_lib/signup';
 
@@ -32,7 +32,6 @@ function showMessage(message: string) {
 
 export default function SignupPage() {
   const [state, formAction] = useFormState(onSubmitSignUp, {message: ''});
-  // const {pending} = useFormStatus();
   const idRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const pwRef = useRef<HTMLInputElement>(null);
@@ -72,6 +71,7 @@ export default function SignupPage() {
   const pwBlurHandler = () => {
     setPwActive(false);
   };
+
 
   return (
     <div className={styles.container}>

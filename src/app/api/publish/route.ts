@@ -13,12 +13,5 @@ export async function POST(request: Request) {
     return Response.json(jsonResult);
   } catch (err) {
     console.error('publish 호출 중 오류 발생:', err);
-    // 에러 상황에 대한 Response 처리
-    return new Response(JSON.stringify({error: 'publish 서버 에러 발생'}), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
   }
 }

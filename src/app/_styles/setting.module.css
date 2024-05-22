@@ -167,3 +167,24 @@
 
 .category {
 }
+
+.currnetCategory_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.currnetCategory_input_wrap {
+  display: flex;
+  align-items: center;
+}
+
+.deleteButton {
+  margin: 0 22px 0 10px;
+}
+.no_categories {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+}
