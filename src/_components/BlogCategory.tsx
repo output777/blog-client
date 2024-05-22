@@ -16,13 +16,12 @@ import {IoSettingsOutline} from 'react-icons/io5';
 import {RxCross2} from 'react-icons/rx';
 import {useMobileCategoryStore} from '@/app/_store/mobileCategoryStore';
 
-interface CategoryProps {
+export interface CategoryProps {
   id: number;
   name: string;
   postCount: number;
 }
-
-interface CategoryDataProps {
+export interface CategoryDataProps {
   totalPosts: number;
   categories: CategoryProps[];
 }
@@ -68,6 +67,7 @@ export default function BlogCategory() {
     setMobileCategoryActive(false);
   }, []);
 
+
   return (
     <>
       <div className={`${styles.side_content} ${mobileCategoryActive ? styles.show : ''}`}>
@@ -112,7 +112,7 @@ export default function BlogCategory() {
                   전체보기
                 </button>
               </Link>
-              <span>({categoryData?.totalPosts})</span>
+              <span>{categoryData ? `(${categoryData?.totalPosts})` : '(0)'}</span>
             </li>
             {categoryData?.categories?.map((category: CategoryProps) => (
               <li key={category.id} className={styles.category}>

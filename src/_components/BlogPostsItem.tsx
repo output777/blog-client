@@ -87,9 +87,9 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
     }
   };
 
-  async function deletHandler(postId: string | number) {
+  async function deleteHandler(postId: string | number) {
     try {
-      await deleteMutation.mutate(postId as string);
+      deleteMutation.mutate(postId as string);
     } catch (error) {
       console.error('Error deleting post:', error);
     }
@@ -149,7 +149,7 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
                   <div
                     className={styles.posts_content_header_info_button_delete}
                     id="delete_button"
-                    onClick={() => deletHandler(post?.post_id)}
+                    onClick={() => deleteHandler(post?.post_id)}
                   >
                     <span>삭제하기</span>
                     <BsTrash3 />

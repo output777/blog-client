@@ -24,6 +24,10 @@ export const getTopViewsPost = async () => {
 export default async function TopViews() {
   const topViewsPosts = await getTopViewsPost();
 
+  if(!topViewsPosts) {
+    return null;
+  }
+
   return (
     <section className={styles.top_views}>
       <div className={styles.inner}>

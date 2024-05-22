@@ -60,6 +60,12 @@ export default function ThumbnailPostList() {
     setCategoryId('');
   }, []);
 
+
+  if(!data || data?.posts?.length === 0) {
+    return (<div className={styles.content}>
+      <span className={styles.no_posts}>작성된 포스팅이 없습니다</span></div>)
+  }
+
   return (
     <div className={styles.content}>
       <div className={styles.list_post_article}>
@@ -97,14 +103,12 @@ export default function ThumbnailPostList() {
           </div>
         ))}
       </div>
-      {isFetching ? null : (
-        <Pagination
-          totalPages={data?.pagination?.totalPages}
-          limitPage={limitPage}
-          startPage={startPage}
-          currentPage={params.get('page')}
-        />
-      )}
+      <Pagination
+        totalPages={data?.pagination?.totalPages}
+        limitPage={limitPage}
+        startPage={startPage}
+        currentPage={params.get('page')}
+      />
     </div>
   );
 }

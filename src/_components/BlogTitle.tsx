@@ -7,7 +7,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useBlogStore} from '@/app/_store/blogStroe';
 import {useUrlParamsNicknameStore} from '@/app/_store/urlParamsNicknameStore';
 
-interface BlogDataProps {
+export interface BlogDataProps {
   blog: {
     blog_id: number;
     reg_tm: string;
