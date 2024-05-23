@@ -121,7 +121,7 @@ export default function Writepage() {
   };
 
   useEffect(() => {
-    if (!isFetching && !categoryData) {
+    if (!isFetching && categoryData?.categories.length === 0) {
       alert('카테고리를 생성 후 글을 작성할 수 있습니다.');
       router.push(`/blog/${session?.data?.user?.name}/setting`);
     }
