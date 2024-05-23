@@ -67,6 +67,14 @@ export default function BlogCategory() {
     setMobileCategoryActive(false);
   }, []);
 
+  useEffect(() => {
+    return () => {
+      setCategoryId('')
+    }
+  }, [])
+
+
+  console.log("session", session)
 
   return (
     <>
@@ -80,6 +88,7 @@ export default function BlogCategory() {
         <div className={styles.profile_wrap}>
           <span className={styles.profile_title}>{blogTitle}</span>
           <span className={styles.profile_nickname}>{nickname}</span>
+          {session?.data && session?.data?.user?.name === nickname ? (
           <div className={styles.profile_menu}>
             <Link href={`/blog/${nickname}/write`}>
               <SlPencil /> <span>글쓰기</span>
@@ -88,6 +97,8 @@ export default function BlogCategory() {
               <IoSettingsOutline /> <span>관리</span>
             </Link>
           </div>
+          )
+          :null }
         </div>
         <div className={styles.category_wrap}>
           <div className={styles.category_header}>
@@ -112,7 +123,7 @@ export default function BlogCategory() {
                   전체보기
                 </button>
               </Link>
-              <span>{categoryData ? `(${categoryData?.totalPosts})` : '(0)'}</span>
+              <span>{categoryData?.categories.length !== 0 ? `(${categoryData?.totalPosts})` : '(0)'}</span>
             </li>
             {categoryData?.categories?.map((category: CategoryProps) => (
               <li key={category.id} className={styles.category}>

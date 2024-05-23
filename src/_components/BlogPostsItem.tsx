@@ -11,9 +11,11 @@ import {SlPencil} from 'react-icons/sl';
 import {BsTrash3} from 'react-icons/bs';
 import ContentComponent from './ContentComponent';
 import {regFullTime} from '@/app/_lib/time';
+import { useSession } from 'next-auth/react';
 
 // TODO 현재 페이지에 있는 postsData가 0인 경우 처리하기
 export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
+  const session = useSession();
   const queryClient = useQueryClient();
   const {postDataPage, setPostDataPage} = usePostDataPageStore();
   const [limitPage, setLimitPage] = useState(10);
@@ -127,6 +129,7 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
                 <span>{post?.reg_tm}</span>
                 {/* <span>{regFullTime(post?.reg_tm)}</span> */}
               </div>
+              {session?.data && session?.data?.user?.name === nickname ? (
               <div className={styles.posts_content_header_info_button_wrap}>
                 <HiOutlineDotsVertical
                   className={styles.posts_content_header_info_button}
@@ -156,6 +159,7 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
                   </div>
                 </div>
               </div>
+              ) : null}
             </div>
             <div className={styles.posts_content_header_border_bottom}></div>
           </div>
