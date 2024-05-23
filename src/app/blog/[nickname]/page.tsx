@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styles from '@/app/_styles/blog.module.css';
 import BlogHeader from '@/_components/BlogHeader';
 import dynamic from 'next/dynamic';
@@ -55,11 +55,13 @@ export default function BlogNicknamePage() {
     <div className={styles.blog_container}>
       <div className={styles.blog_wrap}>
         <BlogHeader />
+        <Suspense fallback={<div></div>}>
         <DynamicBlogTitle />
         <div className={styles.blog_content}>
           <DynamicBlogCategory />
           <DynamicBlogPosts />
         </div>
+        </Suspense>
       </div>
     </div>
   );
