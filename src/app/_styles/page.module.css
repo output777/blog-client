@@ -1,9 +1,9 @@
 .container {
   position: relative;
-  min-height: 100dvh;
+  /* min-height: 100dvh; */
   min-width: 1110px;
-  min-height: 100%;
-  padding-bottom: 129px;
+  /* min-height: 100%; */
+  /* padding-bottom: 129px; */
 }
 
 .layout_content {
