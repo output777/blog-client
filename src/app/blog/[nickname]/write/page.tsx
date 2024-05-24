@@ -32,7 +32,7 @@ export default function Writepage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [editorValue, setEditorValue] = useState('');
 
-  const {data: categoryData, isFetching} = useQuery({
+  const {data: categoryData, isFetching, isLoading} = useQuery({
     queryKey: ['categories', session?.data?.user?.name],
     queryFn: async () => {
       const url = new URL('/api/getcategory', window.location.origin);
@@ -42,8 +42,6 @@ export default function Writepage() {
       return await response.json();
     },
   });
-
-  console.log('categoryData', categoryData);
 
   const createMutation = useMutation({
     mutationFn: async (postData: PostDataProps) => {
@@ -119,13 +117,6 @@ export default function Writepage() {
     };
     createMutation.mutate(postData);
   };
-
-  useEffect(() => {
-    if (!isFetching && categoryData?.categories.length === 0) {
-      alert('카테고리를 생성 후 글을 작성할 수 있습니다.');
-      router.push(`/blog/${session?.data?.user?.name}/setting`);
-    }
-  }, [isFetching, categoryData]);
 
   return (
     <div className={styles.blog_wrap}>

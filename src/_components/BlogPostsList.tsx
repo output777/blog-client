@@ -134,9 +134,8 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
             <div className={styles.pagination}>
               <button
                 onClick={prevPostListPageHandler}
-                className={`${styles.prevBtn} ${
-                  postListData?.pagination?.currentPage === 1 ? styles.none : ''
-                }`}
+                className={`${styles.prevBtn}`}
+                disabled={postListData?.pagination?.currentPage === 1}
               >
                 <GrFormPrevious />
                 이전
@@ -155,9 +154,8 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
               ))}
               <button
                 onClick={nextPostListPageHandler}
-                className={`${styles.nextBtn} ${
-                  postListPage === postListData?.pagination?.totalPages ? styles.none : ''
-                }`}
+                className={`${styles.nextBtn}`}
+                disabled={postListPage === postListData?.pagination?.totalPages}
               >
                 다음 <GrFormNext />
               </button>

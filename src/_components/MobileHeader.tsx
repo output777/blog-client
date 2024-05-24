@@ -40,15 +40,9 @@ export default function MobileHeader() {
       </button>
       {session ? (
         <div className={`${styles.menu_wrap} ${!active ? styles.none : ''}`}>
-          <div className={styles.my_blog}>
-            <Link href={`/blog/${session?.data?.user?.name}`}>내블로그</Link>
-          </div>
-          <div className={styles.write}>
-            <Link href={`/blog/${session?.data?.user?.name}/write`}>글쓰기</Link>
-          </div>
-          <div className={styles.setting}>
-            <Link href={`/blog/${session?.data?.user?.name}/setting`}>관리</Link>
-          </div>
+            <Link href={`/blog/${session?.data?.user?.name}`} className={styles.my_blog}>내블로그</Link>
+            <Link href={`/blog/${session?.data?.user?.name}/write`} className={styles.write}>글쓰기</Link>
+            <Link href={`/blog/${session?.data?.user?.name}/setting`} className={styles.setting}>관리</Link>
         </div>
       ) : (
         <div className={`${styles.menu_wrap} ${!active ? styles.none : ''}`}>

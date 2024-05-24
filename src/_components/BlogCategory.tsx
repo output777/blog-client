@@ -73,8 +73,18 @@ export default function BlogCategory() {
     }
   }, [])
 
+  useEffect(() => {
+    if(mobileCategoryActive) {
+      document.body.style.overflow ='hidden';
+    }else {
+      document.body.style.overflow ='auto';
+    }
+  }, [mobileCategoryActive])
 
-  console.log("session", session)
+  if(isFetchingCategoryData) {
+    return <div></div>
+  }
+
 
   return (
     <>

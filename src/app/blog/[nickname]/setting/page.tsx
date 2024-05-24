@@ -6,7 +6,7 @@ import SettingContent from '@/_components/SettingContent';
 
 export default async function SettingPage() {
   const session = await auth();
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.blog_header_wrap}>
