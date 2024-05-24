@@ -77,6 +77,10 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
     }
   }, [postListData, isFetchingpostListData, postListLimitPage, setPostListPage]);
 
+  if(isFetchingpostListData) {
+    return <div></div>
+  }
+
   return (
     <>
       <div
@@ -124,8 +128,7 @@ export default function BlogPostsList({categoryId, nickname}: BlogPostsProps) {
                 >
                   {post?.title}
                 </Link>
-                <div>{post?.reg_tm}</div>
-                {/* <div>{regTime(post?.reg_tm)}</div> */}
+                <div>{regTime(post?.reg_tm)}</div>
               </div>
             ))}
             <div className={styles.pagination}>

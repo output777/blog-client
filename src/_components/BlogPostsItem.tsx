@@ -116,6 +116,10 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
     };
   }, []);
 
+  if(isFetchingPostsData) {
+    return <div></div>
+  }
+
   return (
     <>
       {postsData?.posts?.map((post: PostProps) => (
@@ -126,8 +130,7 @@ export default function BlogPostsItem({categoryId, nickname}: BlogPostsProps) {
             <div className={styles.posts_content_header_info_wrap}>
               <div className={styles.posts_content_header_profile}>
                 <Link href={`/blog/${nickname}`}>{nickname}</Link>
-                <span>{post?.reg_tm}</span>
-                {/* <span>{regFullTime(post?.reg_tm)}</span> */}
+                <span>{regFullTime(post?.reg_tm as string)}</span>
               </div>
               {session?.data && session?.data?.user?.name === nickname ? (
               <div className={styles.posts_content_header_info_button_wrap}>
