@@ -21,8 +21,6 @@ export default function Pagination({
     return Array.from({length: Number(lastPage) - startPage + 1}, (_, index) => startPage + index);
   }, [totalPages, limitPage, startPage]);
 
-  console.log("currentPage", currentPage)
-
   const [prevPage, nextPage] = useMemo(() => {
     const prev = Number(currentPage) === 1 ? currentPage : Number(currentPage) - 1;
     const next = Number(currentPage) === totalPages ? currentPage : Number(currentPage ?? 1) + 1;

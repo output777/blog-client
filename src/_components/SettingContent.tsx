@@ -67,6 +67,26 @@ export default function SettingContent() {
     },
   });
 
+  const updateBlogTitleMutation = useMutation({
+    mutationFn: async (newBlogTitle:string ) => {
+      const response = await fetch(`/api/updateblogtitle`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newBlogTitle),
+      });
+      return await response.json();
+    },
+    onSuccess: () => {
+      // 변경 성공 후 특정 쿼리 무효화
+      alert('블로그 이름이 변경되었습니다.');
+      queryClient.invalidateQueries({queryKey: ['blog', session.data?.user?.name]});
+    },
+  });
+
+
+
   const updateMutation = useMutation({
     mutationFn: async (newCategoryValue:newCategoryValueProps ) => {
       const response = await fetch(`/api/updatecategory`, {
@@ -146,6 +166,10 @@ export default function SettingContent() {
     setBlogTitle(value);
   };
 
+  const blogTitleUpdateHandler = async () => {
+    updateBlogTitleMutation.mutate(blogTitle)
+  }
+
   useEffect(() => {
     if (!isFetchingBlogData && blogData) {
       setBlogTitle(blogData?.blog?.title);
@@ -158,41 +182,47 @@ export default function SettingContent() {
     }
   }, [categoryData, isFetchingCategoryData]);
 
-  console.log('categoryData', categoryData);
-
   return (
     <div className={styles.content_wrap}>
       <h1 className={styles.content_title}>블로그 정보</h1>
       <div className={styles.contents}>
         <div className={styles.content}>
-          <label>블로그명</label>
-          <div className={styles.input_wrap}>
-            <input type="text" value={blogTitle} onChange={blogTitleChangeHandler}/>
-            <button>변경</button>
+          <div className={styles.content_main}>
+            <label>블로그명</label>
+            <div className={styles.input_wrap}>
+              <input type="text" value={blogTitle} onChange={blogTitleChangeHandler}/>
+              <button onClick={blogTitleUpdateHandler}>변경</button>
+            </div>
           </div>
           <p>변경버튼을 눌러 블로그 이름을 변경할 수 있습니다.</p>
         </div>
         <div className={styles.category_content_wrap}>
           <label className={styles.category_label}>카테고리 관리 · 설정</label>
           <div className={styles.content}>
-            <label>카테고리명</label>
-            <div className={styles.input_wrap}>
-              <input type="text" value={category} onChange={categoryChangeHandler} />
-              <button onClick={categoryAddHandler}>추가</button>
+            <div className={styles.content_main}>
+              <label>카테고리명</label>
+              <div className={styles.input_wrap}>
+                <input type="text" value={category} onChange={categoryChangeHandler} />
+                <button onClick={categoryAddHandler}>추가</button>
+              </div>
             </div>
             <p>추가버튼을 눌러 카테고리를 추가할 수 있습니다.</p>
           </div>
         </div>
         <div className={styles.content}>
-          <label>현재 카테고리</label>
-          <div className={styles.currnetCategory_wrap}>
-            {categoryData?.categories.length !== 0 ? categories.map((category: CategoryProps) => (
-                <div className={styles.currnetCategory_input_wrap} key={category.id}>
-                  <input type="text" value={category.name} onChange={(e) => categoriesChangeHandler(e, category.id)} />
-                  <button onClick={() => categoryUpdateHandler(category.id)}>변경</button>
-                  <button onClick={() => categoryDeleteHandler(category.id)} className={styles.deleteButton}>삭제</button>
-                </div>
-            )) : <div className={styles.no_categories}>현재 카테고리가 없습니다.</div>}
+          <div className={styles.content_main}>
+            <label>현재 카테고리</label>
+            <div className={styles.currnetCategory_wrap}>
+              {categoryData?.categories.length !== 0 ? categories.map((category: CategoryProps) => (
+                  <div className={styles.currnetCategory_input_wrap} key={category.id}>
+                    <input type="text" value={category.name} onChange={(e) => categoriesChangeHandler(e, category.id)} />
+                    <div>
+                      <button onClick={() => categoryUpdateHandler(category.id)}>변경</button>
+                      <button onClick={() => categoryDeleteHandler(category.id)} className={styles.deleteButton}>삭제</button>
+                    </div>
+                  </div>
+              )) : <div className={styles.no_categories}>현재 카테고리가 없습니다.</div>}
+            </div>
           </div>
           <p>카테고리는 최대 10개까지 추가할 수 있습니다.</p>
         </div>

@@ -12,8 +12,10 @@ import ContentComponent from './ContentComponent';
 import {regFullTime} from '@/app/_lib/time';
 import {SlPencil} from 'react-icons/sl';
 import {BsTrash3} from 'react-icons/bs';
+import { useSession } from 'next-auth/react';
 
 export default function BlogPostItem() {
+  const session = useSession();
   const router = useRouter();
   const params = useParams();
   const {nickname} = useUrlParamsNicknameStore();
@@ -75,6 +77,9 @@ export default function BlogPostItem() {
     };
   }, []);
 
+  if(isFetchingPostData) {
+    return <div></div>
+  }
 
   return (
     <div className={styles.post_item_wrap}>
@@ -87,6 +92,7 @@ export default function BlogPostItem() {
               <Link href={`/blog/${nickname}`}>{nickname}</Link>
               <span>{regFullTime(postData?.reg_tm as string)}</span>
             </div>
+            {session?.data && session?.data?.user?.name === nickname ? (
             <div className={styles.posts_content_header_info_button_wrap}>
               <HiOutlineDotsVertical
                 className={styles.posts_content_header_info_button}
@@ -116,6 +122,7 @@ export default function BlogPostItem() {
                 </div>
               </div>
             </div>
+            ) : null}
           </div>
           <div className={styles.posts_content_header_border_bottom}></div>
         </div>
